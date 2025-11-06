@@ -1,0 +1,627 @@
+    cd /Users/amarpreetsingh/Develop/places
+
+    Entitlements:
+
+    {
+    "application-identifier" = "R3BH487556.expenai.places";
+    "com.apple.developer.team-identifier" = R3BH487556;
+    "get-task-allow" = 1;
+}
+
+    builtin-productPackagingUtility -entitlements -format xml -o /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/places.app.xcent
+
+ProcessProductPackagingDER /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/places.app.xcent /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/places.app.xcent.der (in target 'places' from project 'places')
+    cd /Users/amarpreetsingh/Develop/places
+    /usr/bin/derq query -f xml -i /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/places.app.xcent -o /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/places.app.xcent.der --raw
+
+MkDir /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/assetcatalog_output/thinned (in target 'places' from project 'places')
+    cd /Users/amarpreetsingh/Develop/places
+    /bin/mkdir -p /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/assetcatalog_output/thinned
+
+MkDir /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/assetcatalog_output/unthinned (in target 'places' from project 'places')
+    cd /Users/amarpreetsingh/Develop/places
+    /bin/mkdir -p /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/assetcatalog_output/unthinned
+
+GenerateAssetSymbols /Users/amarpreetsingh/Develop/places/places/Assets.xcassets (in target 'places' from project 'places')
+    cd /Users/amarpreetsingh/Develop/places
+    /Applications/Xcode.app/Contents/Developer/usr/bin/actool /Users/amarpreetsingh/Develop/places/places/Assets.xcassets --compile /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/InstallationBuildProductsLocation/Applications/places.app --output-format human-readable-text --notices --warnings --export-dependency-info /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/assetcatalog_dependencies --output-partial-info-plist /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/assetcatalog_generated_info.plist --app-icon AppIcon --accent-color AccentColor --compress-pngs --enable-on-demand-resources YES --development-region en --target-device iphone --target-device ipad --minimum-deployment-target 26.0 --platform iphoneos --bundle-identifier expenai.places --generate-swift-asset-symbols /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/DerivedSources/GeneratedAssetSymbols.swift --generate-objc-asset-symbols /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/DerivedSources/GeneratedAssetSymbols.h --generate-asset-symbol-index /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/DerivedSources/GeneratedAssetSymbols-Index.plist
+/* com.apple.actool.compilation-results */
+/Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/DerivedSources/GeneratedAssetSymbols-Index.plist
+/Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/DerivedSources/GeneratedAssetSymbols.h
+/Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/DerivedSources/GeneratedAssetSymbols.swift
+
+
+CompileAssetCatalogVariant thinned /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/InstallationBuildProductsLocation/Applications/places.app /Users/amarpreetsingh/Develop/places/places/Assets.xcassets (in target 'places' from project 'places')
+    cd /Users/amarpreetsingh/Develop/places
+    /Applications/Xcode.app/Contents/Developer/usr/bin/actool /Users/amarpreetsingh/Develop/places/places/Assets.xcassets --compile /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/assetcatalog_output/thinned --output-format human-readable-text --notices --warnings --export-dependency-info /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/assetcatalog_dependencies_thinned --output-partial-info-plist /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/assetcatalog_generated_info.plist_thinned --app-icon AppIcon --accent-color AccentColor --compress-pngs --enable-on-demand-resources YES --development-region en --target-device iphone --target-device ipad --minimum-deployment-target 26.0 --platform iphoneos
+/* com.apple.actool.compilation-results */
+/Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/assetcatalog_generated_info.plist_thinned
+
+
+SwiftDriver places normal arm64 com.apple.xcode.tools.swift.compiler (in target 'places' from project 'places')
+    cd /Users/amarpreetsingh/Develop/places
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name places -O -whole-module-optimization -enforce-exclusivity\=checked @/Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/Objects-normal/arm64/places.SwiftFileList -default-isolation\=MainActor -enable-bare-slash-regex -enable-upcoming-feature DisableOutwardActorInference -enable-upcoming-feature InferSendableFromCaptures -enable-upcoming-feature GlobalActorIsolatedTypesUsability -enable-upcoming-feature MemberImportVisibility -enable-upcoming-feature InferIsolatedConformances -enable-upcoming-feature NonisolatedNonsendingByDefault -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk -target arm64-apple-ios26.0 -g -module-cache-path /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -swift-version 5 -I /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/BuildProductsPath/Release-iphoneos -F /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/BuildProductsPath/Release-iphoneos -emit-localized-strings -emit-localized-strings-path /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/Objects-normal/arm64 -c -num-threads 8 -Xcc -ivfsstatcache -Xcc /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphoneos26.0-23A339-81ce72e5b06c9602b9d30b56f2eed08a.sdkstatcache -output-file-map /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/Objects-normal/arm64/places-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/Objects-normal/arm64/places.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/Objects-normal/arm64/places_const_extract_protocols.json -Xcc -iquote -Xcc /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/places-generated-files.hmap -Xcc -I/Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/places-own-target-headers.hmap -Xcc -I/Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/places-all-target-headers.hmap -Xcc -iquote -Xcc /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/places-project-headers.hmap -Xcc -I/Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/BuildProductsPath/Release-iphoneos/include -Xcc -I/Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/DerivedSources-normal/arm64 -Xcc -I/Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/DerivedSources/arm64 -Xcc -I/Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/DerivedSources -emit-objc-header -emit-objc-header-path /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/Objects-normal/arm64/places-Swift.h -working-directory /Users/amarpreetsingh/Develop/places -no-emit-module-separately-wmo
+
+LinkAssetCatalog /Users/amarpreetsingh/Develop/places/places/Assets.xcassets (in target 'places' from project 'places')
+    cd /Users/amarpreetsingh/Develop/places
+    builtin-linkAssetCatalog --thinned /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/assetcatalog_output/thinned --thinned-dependencies /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/assetcatalog_dependencies_thinned --thinned-info-plist-content /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/assetcatalog_generated_info.plist_thinned --unthinned /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/assetcatalog_output/unthinned --unthinned-dependencies /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/assetcatalog_dependencies_unthinned --unthinned-info-plist-content /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/assetcatalog_generated_info.plist_unthinned --output /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/InstallationBuildProductsLocation/Applications/places.app --plist-output /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/assetcatalog_generated_info.plist
+
+ProcessInfoPlistFile /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/InstallationBuildProductsLocation/Applications/places.app/Info.plist /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/empty-places.plist (in target 'places' from project 'places')
+    cd /Users/amarpreetsingh/Develop/places
+    builtin-infoPlistUtility /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/empty-places.plist -producttype com.apple.product-type.application -genpkginfo /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/InstallationBuildProductsLocation/Applications/places.app/PkgInfo -expandbuildsettings -format binary -platform iphoneos -additionalcontentfile /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/assetcatalog_generated_info.plist -requiredArchitecture arm64 -o /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/InstallationBuildProductsLocation/Applications/places.app/Info.plist
+
+SwiftCompile normal arm64 Compiling\ ContentView.swift,\ Item.swift,\ placesApp.swift,\ GeneratedAssetSymbols.swift /Users/amarpreetsingh/Develop/places/places/ContentView.swift /Users/amarpreetsingh/Develop/places/places/Item.swift /Users/amarpreetsingh/Develop/places/places/placesApp.swift /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/DerivedSources/GeneratedAssetSymbols.swift /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/Observation.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/Darwin.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/Dispatch.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/_Concurrency.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/Swift.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/CoreTransferable.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/Combine.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/System.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/_DarwinFoundation2.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/_DarwinFoundation1.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/DeveloperToolsSupport.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/Spatial.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/Accessibility.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/simd.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/SwiftUI.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/CoreGraphics.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/UIKit.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/SwiftUICore.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/_StringProcessing.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/Metal.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/os.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/_DarwinFoundation3.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/CoreImage.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/_SwiftData_SwiftUI.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/_Builtin_float.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/CoreText.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/CoreFoundation.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/Symbols.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/UniformTypeIdentifiers.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/SwiftData.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/XPC.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/FileProvider.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/CoreData.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/QuartzCore.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/Foundation.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/DataDetection.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/OSLog.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/CoreVideo.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/ObjectiveC.swiftmodule/arm64e-apple-ios.swiftmodule /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_SwiftConcurrencyShims-9C3WZTV5VHPBG35NY20YJWFOD.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/sys_types-EBNDQ6FWDFXTPR5NPS21ACDCI.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/ObjectiveC-8ZJOZIRWZMMXGII1QGIMM00PB.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Metal-E6ZZPW67VER1QD47LQBBMJ5WR.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_Builtin_stdint-IK4Y9FG3907V80NMMERVA195.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/IOSurface-507GEN2FNRP5T74YPNP25NPOB.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_Builtin_tgmath-7JHUTO5I62WYNTSRH06SYS5QY.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Accessibility-B6KOXIFTBWTNE4YPQ5AIHQCNK.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_Builtin_float-BPRB2KKK749M7WQXBYIK9GWOW.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/DeveloperToolsSupport-71THZXW2VVUVE86A9R1ICQWI0.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/CoreImage-P210S7F5V834LDM7TZ3IP2BI.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Symbols-CI7OSRNIDQ2Z8HDCVWZTVQM41.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_Builtin_limits-58IPDGVQ11RIVPRQRDM65EMP4.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/CoreText-1B35Y2S42CFDN8I4A9DQ14JKS.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/CFNetwork-4SMIRC8RK46DDUL4FSFV6GAM1.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/UserNotifications-10EKEYW15I9BJUUS44508YCJJ.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/CoreFoundation-3ZBZXIEGW2R558CAFF5OYEQ7T.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/SwiftUICore-7CA0QZ1G38PKSD9OD363J2XTS.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/UIKit-8BU0TJ3NDA8T1181PMXUI7YOQ.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/XPC-AX7BV8BCUZQKNX3CG0Y3682J9.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/os-A660XE7XXTG4KVOFE135XNE3I.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Security-27G6HMB9X7K1LKKCQLP8DQY3T.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/DataDetection-9YO98SISSQQQJLM7E89AUGPH0.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_Builtin_stdarg-1D1CNJA17ZNVE8WELC5D7AYD2.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_Builtin_stdatomic-4N86WV1BB8CW9H8LAR4TOC0M9.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/QuartzCore-A549RCHAXQ606MMQ26DVPMSB8.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Dispatch-EZA3AMOTPHGA6FDVZJ57HF7QM.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/UniformTypeIdentifiers-CBQH346SS70QQTE6QBHV3OR8N.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_DarwinFoundation3-5B201XOOQIRWW8DZYBSTQWA8K.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/SwiftUI-F018EDICTRMOH8WSXEVJF0C2M.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_DarwinFoundation1-AXIW49Q4KBHFQ0WKDWJ264FIP.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/CoreData-4D9E3WISY8EIEHEJUJZ7INMNP.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/os_workgroup-2DDHXQFQSJZJ9DMAMH64MQ7HG.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/SwiftShims-TQCVO73PALFRZW2XGSE8JYIN.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/CoreGraphics-3GGCLVYQAVZN1EWT07CUGLH5S.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_Builtin_inttypes-EY51WE3A25JK8M7IX1UHC7UIS.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/OpenGLES-DDO3RHV1SU697WO2W2P29OIPN.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/FileProvider-9KWN2HHH6BBFKQBRRWWPE6NJN.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/MachO-BFEGLHFYWUHWI95UKI6BMYE3Z.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Darwin-DM3ZIECSZROYAK4V843QEYNRJ.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/CoreTransferable-B19DE7CKG9T8BUP7GSOJQ0VXC.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_Builtin_stdbool-EEQK0IZN7JVI43GQFHH5EJEAI.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/UIUtilities-8EVZBZJ22MPRZABFG2L8YVO9G.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/simd-8E5SZZUKGS5KA3TN0CDNSQDX6.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Foundation-8JP5O7B2V3RGNGAB9FOXR719Y.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_Builtin_intrinsics-60N45CR6T84M86YJ4NSUJVURQ.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/ImageIO-9VVLRZEDIJIUJ2FC2V6BBL2OP.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_DarwinFoundation2-E46Y8BBKH5EWS0NT9XGL2NCVQ.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/OSLog-9LNJWTXICV2PT8PCVKVPJXHS2.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Spatial-9R72BJ0OI9JS1KAUIHFBINRH9.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_Builtin_stddef-6CWDZVRH422J56W90GDVUGV6M.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/ptrcheck-7UPZ4G8BT94VA84LE8SJPT5H8.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_AvailabilityInternal-4R3EH97CDNZH6UME481G7EMV0.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/os_object-AIB4JS48EWA6H0AFIW3WT2Q70.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/CoreVideo-85AEDGE10ATQVH1U91BZ9RZW2.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/ptrauth-E5L07DB7YYNIOE3B4UR72DII9.pcm /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/Objects-normal/arm64/places-dependencies-2.json (in target 'places' from project 'places')
+
+CompileSwift normal arm64 (in target 'places' from project 'places')
+    cd /Users/amarpreetsingh/Develop/places
+
+
+SwiftDriver\ Compilation places normal arm64 com.apple.xcode.tools.swift.compiler (in target 'places' from project 'places')
+    cd /Users/amarpreetsingh/Develop/places
+    builtin-Swift-Compilation -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name places -O -whole-module-optimization -enforce-exclusivity\=checked @/Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/Objects-normal/arm64/places.SwiftFileList -default-isolation\=MainActor -enable-bare-slash-regex -enable-upcoming-feature DisableOutwardActorInference -enable-upcoming-feature InferSendableFromCaptures -enable-upcoming-feature GlobalActorIsolatedTypesUsability -enable-upcoming-feature MemberImportVisibility -enable-upcoming-feature InferIsolatedConformances -enable-upcoming-feature NonisolatedNonsendingByDefault -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk -target arm64-apple-ios26.0 -g -module-cache-path /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -swift-version 5 -I /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/BuildProductsPath/Release-iphoneos -F /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/BuildProductsPath/Release-iphoneos -emit-localized-strings -emit-localized-strings-path /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/Objects-normal/arm64 -c -num-threads 8 -Xcc -ivfsstatcache -Xcc /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphoneos26.0-23A339-81ce72e5b06c9602b9d30b56f2eed08a.sdkstatcache -output-file-map /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/Objects-normal/arm64/places-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/Objects-normal/arm64/places.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/Objects-normal/arm64/places_const_extract_protocols.json -Xcc -iquote -Xcc /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/places-generated-files.hmap -Xcc -I/Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/places-own-target-headers.hmap -Xcc -I/Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/places-all-target-headers.hmap -Xcc -iquote -Xcc /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/places-project-headers.hmap -Xcc -I/Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/BuildProductsPath/Release-iphoneos/include -Xcc -I/Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/DerivedSources-normal/arm64 -Xcc -I/Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/DerivedSources/arm64 -Xcc -I/Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/DerivedSources -emit-objc-header -emit-objc-header-path /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/Objects-normal/arm64/places-Swift.h -working-directory /Users/amarpreetsingh/Develop/places -no-emit-module-separately-wmo
+
+SwiftDriverJobDiscovery normal arm64 Compiling ContentView.swift, Item.swift, placesApp.swift, GeneratedAssetSymbols.swift (in target 'places' from project 'places')
+
+SwiftDriver\ Compilation\ Requirements places normal arm64 com.apple.xcode.tools.swift.compiler (in target 'places' from project 'places')
+    cd /Users/amarpreetsingh/Develop/places
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name places -O -whole-module-optimization -enforce-exclusivity\=checked @/Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/Objects-normal/arm64/places.SwiftFileList -default-isolation\=MainActor -enable-bare-slash-regex -enable-upcoming-feature DisableOutwardActorInference -enable-upcoming-feature InferSendableFromCaptures -enable-upcoming-feature GlobalActorIsolatedTypesUsability -enable-upcoming-feature MemberImportVisibility -enable-upcoming-feature InferIsolatedConformances -enable-upcoming-feature NonisolatedNonsendingByDefault -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk -target arm64-apple-ios26.0 -g -module-cache-path /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -swift-version 5 -I /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/BuildProductsPath/Release-iphoneos -F /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/BuildProductsPath/Release-iphoneos -emit-localized-strings -emit-localized-strings-path /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/Objects-normal/arm64 -c -num-threads 8 -Xcc -ivfsstatcache -Xcc /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphoneos26.0-23A339-81ce72e5b06c9602b9d30b56f2eed08a.sdkstatcache -output-file-map /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/Objects-normal/arm64/places-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/Objects-normal/arm64/places.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/Objects-normal/arm64/places_const_extract_protocols.json -Xcc -iquote -Xcc /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/places-generated-files.hmap -Xcc -I/Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/places-own-target-headers.hmap -Xcc -I/Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/places-all-target-headers.hmap -Xcc -iquote -Xcc /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/places-project-headers.hmap -Xcc -I/Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/BuildProductsPath/Release-iphoneos/include -Xcc -I/Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/DerivedSources-normal/arm64 -Xcc -I/Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/DerivedSources/arm64 -Xcc -I/Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/DerivedSources -emit-objc-header -emit-objc-header-path /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/Objects-normal/arm64/places-Swift.h -working-directory /Users/amarpreetsingh/Develop/places -no-emit-module-separately-wmo
+
+SwiftMergeGeneratedHeaders /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/DerivedSources/places-Swift.h /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/Objects-normal/arm64/places-Swift.h (in target 'places' from project 'places')
+    cd /Users/amarpreetsingh/Develop/places
+    builtin-swiftHeaderTool -arch arm64 /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/Objects-normal/arm64/places-Swift.h -o /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/DerivedSources/places-Swift.h
+
+Copy /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/BuildProductsPath/Release-iphoneos/places.swiftmodule/arm64-apple-ios.swiftmodule /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/Objects-normal/arm64/places.swiftmodule (in target 'places' from project 'places')
+    cd /Users/amarpreetsingh/Develop/places
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/Objects-normal/arm64/places.swiftmodule /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/BuildProductsPath/Release-iphoneos/places.swiftmodule/arm64-apple-ios.swiftmodule
+
+Copy /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/BuildProductsPath/Release-iphoneos/places.swiftmodule/arm64-apple-ios.swiftdoc /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/Objects-normal/arm64/places.swiftdoc (in target 'places' from project 'places')
+    cd /Users/amarpreetsingh/Develop/places
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/Objects-normal/arm64/places.swiftdoc /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/BuildProductsPath/Release-iphoneos/places.swiftmodule/arm64-apple-ios.swiftdoc
+
+Copy /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/BuildProductsPath/Release-iphoneos/places.swiftmodule/arm64-apple-ios.abi.json /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/Objects-normal/arm64/places.abi.json (in target 'places' from project 'places')
+    cd /Users/amarpreetsingh/Develop/places
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/Objects-normal/arm64/places.abi.json /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/BuildProductsPath/Release-iphoneos/places.swiftmodule/arm64-apple-ios.abi.json
+
+Ld /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/InstallationBuildProductsLocation/Applications/places.app/places normal (in target 'places' from project 'places')
+    cd /Users/amarpreetsingh/Develop/places
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios26.0 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk -Os -L/Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/EagerLinkingTBDs/Release-iphoneos -L/Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/BuildProductsPath/Release-iphoneos -F/Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/EagerLinkingTBDs/Release-iphoneos -F/Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/BuildProductsPath/Release-iphoneos -filelist /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/Objects-normal/arm64/places.LinkFileList -Xlinker -rpath -Xlinker @executable_path/Frameworks -dead_strip -Xlinker -object_path_lto -Xlinker /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/Objects-normal/arm64/places_lto.o -Xlinker -final_output -Xlinker /Applications/places.app/places -Xlinker -dependency_info -Xlinker /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/Objects-normal/arm64/places_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/Objects-normal/arm64/places.swiftmodule @/Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/Objects-normal/arm64/places-linker-args.resp -Xlinker -no_adhoc_codesign -o /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/InstallationBuildProductsLocation/Applications/places.app/places
+
+CopySwiftLibs /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/InstallationBuildProductsLocation/Applications/places.app (in target 'places' from project 'places')
+    cd /Users/amarpreetsingh/Develop/places
+    builtin-swiftStdLibTool --copy --verbose --sign 9ADBB7EE9D766ECED9E467B96065E8A2DC4FAC4E --scan-executable /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/InstallationBuildProductsLocation/Applications/places.app/places --scan-folder /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/InstallationBuildProductsLocation/Applications/places.app/Frameworks --scan-folder /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/InstallationBuildProductsLocation/Applications/places.app/PlugIns --scan-folder /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/InstallationBuildProductsLocation/Applications/places.app/SystemExtensions --scan-folder /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/InstallationBuildProductsLocation/Applications/places.app/Extensions --platform iphoneos --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/InstallationBuildProductsLocation/Applications/places.app/Frameworks --unsigned-destination /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/BuildProductsPath/SwiftSupport --strip-bitcode --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+
+ExtractAppIntentsMetadata (in target 'places' from project 'places')
+    cd /Users/amarpreetsingh/Develop/places
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name places --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk --xcode-version 17A324 --platform-family iOS --deployment-target 26.0 --bundle-identifier expenai.places --output /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/InstallationBuildProductsLocation/Applications/places.app --target-triple arm64-apple-ios26.0 --binary-file /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/InstallationBuildProductsLocation/Applications/places.app/places --dependency-file /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/Objects-normal/arm64/places_dependency_info.dat --stringsdata-file /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/Objects-normal/arm64/places.SwiftFileList --metadata-file-list /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/places.DependencyMetadataFileList --static-metadata-file-list /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/places.DependencyStaticMetadataFileList --swift-const-vals-list /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/Objects-normal/arm64/places.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
+2025-11-05 23:58:42.070 appintentsmetadataprocessor[13330:3881247] Starting appintentsmetadataprocessor export
+2025-11-05 23:58:42.072 appintentsmetadataprocessor[13330:3881247] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+
+GenerateDSYMFile /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/BuildProductsPath/Release-iphoneos/places.app.dSYM /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/InstallationBuildProductsLocation/Applications/places.app/places (in target 'places' from project 'places')
+    cd /Users/amarpreetsingh/Develop/places
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/dsymutil /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/InstallationBuildProductsLocation/Applications/places.app/places -o /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/BuildProductsPath/Release-iphoneos/places.app.dSYM
+
+AppIntentsSSUTraining (in target 'places' from project 'places')
+    cd /Users/amarpreetsingh/Develop/places
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsnltrainingprocessor --infoplist-path /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/InstallationBuildProductsLocation/Applications/places.app/Info.plist --temp-dir-path /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/ssu --bundle-id expenai.places --product-path /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/InstallationBuildProductsLocation/Applications/places.app --extracted-metadata-path /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/InstallationBuildProductsLocation/Applications/places.app/Metadata.appintents --deployment-postprocessing --metadata-file-list /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/places.DependencyMetadataFileList --archive-ssu-assets
+2025-11-05 23:58:42.099 appintentsnltrainingprocessor[13332:3881249] Parsing options for appintentsnltrainingprocessor
+2025-11-05 23:58:42.100 appintentsnltrainingprocessor[13332:3881249] No AppShortcuts found - Skipping.
+
+Strip /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/InstallationBuildProductsLocation/Applications/places.app/places (in target 'places' from project 'places')
+    cd /Users/amarpreetsingh/Develop/places
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -D /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/InstallationBuildProductsLocation/Applications/places.app/places
+
+SetOwnerAndGroup amarpreetsingh:staff /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/InstallationBuildProductsLocation/Applications/places.app (in target 'places' from project 'places')
+    cd /Users/amarpreetsingh/Develop/places
+    /usr/sbin/chown -RH amarpreetsingh:staff /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/InstallationBuildProductsLocation/Applications/places.app
+
+SetMode u+w,go-w,a+rX /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/InstallationBuildProductsLocation/Applications/places.app (in target 'places' from project 'places')
+    cd /Users/amarpreetsingh/Develop/places
+    /bin/chmod -RH u+w,go-w,a+rX /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/InstallationBuildProductsLocation/Applications/places.app
+
+CodeSign /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/InstallationBuildProductsLocation/Applications/places.app (in target 'places' from project 'places')
+    cd /Users/amarpreetsingh/Develop/places
+
+    Signing Identity:     "Apple Development: amar.manhala@icloud.com (K4KN9P9B6B)"
+    Provisioning Profile: "iOS Team Provisioning Profile: expenai.places"
+                          (f636be0d-e840-4fea-8b71-b8e2b1b31e33)
+
+    /usr/bin/codesign --force --sign 9ADBB7EE9D766ECED9E467B96065E8A2DC4FAC4E --entitlements /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/IntermediateBuildFilesPath/places.build/Release-iphoneos/places.build/places.app.xcent --generate-entitlement-der /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/InstallationBuildProductsLocation/Applications/places.app
+
+RegisterExecutionPolicyException /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/InstallationBuildProductsLocation/Applications/places.app (in target 'places' from project 'places')
+    cd /Users/amarpreetsingh/Develop/places
+    builtin-RegisterExecutionPolicyException /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/InstallationBuildProductsLocation/Applications/places.app
+
+Validate /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/InstallationBuildProductsLocation/Applications/places.app (in target 'places' from project 'places')
+    cd /Users/amarpreetsingh/Develop/places
+    builtin-validationUtility /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/InstallationBuildProductsLocation/Applications/places.app -validate-for-store -shallow-bundle -infoplist-subpath Info.plist
+
+Touch /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/InstallationBuildProductsLocation/Applications/places.app (in target 'places' from project 'places')
+    cd /Users/amarpreetsingh/Develop/places
+    /usr/bin/touch -c /Users/amarpreetsingh/Library/Developer/Xcode/DerivedData/places-chojozjtagyrezgerjavknxvvhlw/Build/Intermediates.noindex/ArchiveIntermediates/places/InstallationBuildProductsLocation/Applications/places.app
+
+** INSTALL SUCCEEDED **
+
+➜  places git:(main) ✗ brew install ios-deploy
+
+==> Auto-updating Homebrew...
+Adjust how often this is run with HOMEBREW_AUTO_UPDATE_SECS or disable with
+HOMEBREW_NO_AUTO_UPDATE. Hide these hints with HOMEBREW_NO_ENV_HINTS (see `man brew`).
+==> Auto-updated Homebrew!
+Updated 2 taps (homebrew/core and homebrew/cask).
+==> New Formulae
+addlicense: Scan directories recursively to ensure source files have license headers
+aiac: Artificial Intelligence Infrastructure-as-Code Generator
+aicommit2: Reactive CLI that generates commit messages for Git and Jujutsu with AI
+aiken: Modern smart contract platform for Cardano
+airtable-mcp-server: MCP Server for Airtable
+anchor: Solana Program Framework
+anyzig: Universal zig executable that runs any version of zig
+apache-polaris: Interoperable, open source catalog for Apache Iceberg
+apigeecli: Apigee management API command-line interface
+archgw: CLI for Arch Gateway
+asm-lsp: Language server for NASM/GAS/GO Assembly
+atomic_queue: C++14 lock-free queues
+attempt-cli: CLI for retrying fallible commands
+audiowaveform: Generate waveform data and render waveform images from audio files
+ayatana-ido: Ayatana Indicator Display Objects
+b4: Tool to work with public-inbox and patch archives
+bb-cli: Bitbucket Rest API CLI written in pure PHP
+bedtk: Simple toolset for BED files
+bom: Utility to generate SPDX-compliant Bill of Materials manifests
+brush: Bourne RUsty SHell (command interpreter)
+bstring: Fork of Paul Hsieh's Better String Library
+btllib: Bioinformatics Technology Lab common code library
+bunster: Compile shell scripts to static binaries
+caesiumclt: Fast and efficient lossy and/or lossless image compression tool
+cagent: Agent Builder and Runtime by Docker Engineering
+cai: CLI tool for prompting LLMs
+cargo-careful: Execute Rust code carefully, with extra checking along the way
+cargo-clone: Cargo subcommand to fetch the source code of a Rust crate
+cargo-geiger: Detects usage of unsafe Rust in a Rust crate and its dependencies
+changelogen: Generate Beautiful Changelogs using Conventional Commits
+chrome-devtools-mcp: Chrome DevTools for coding agents
+claude-cmd: Claude Code Commands Manager
+claude-code-router: Tool to route Claude Code requests to different models and customize any request
+claude-code-templates: CLI tool for configuring and monitoring Claude Code
+claude-hooks: Hook system for Claude Code
+claudekit: Intelligent guardrails and workflow automation for Claude Code
+clipper2: Polygon clipping and offsetting library
+clippy: Copy files from your terminal that actually paste into GUI apps
+cliproxyapi: Wrap Gemini CLI, Codex, Claude Code, Qwen Code as an API service
+codebook-lsp: Code-aware spell checker language server
+cogapp: Small bits of Python computation for static files
+config-file-validator: CLI tool to validate different configuration file types
+container: Create and run Linux containers using lightweight virtual machines
+container-canary: Test and validate container requirements against versioned manifests
+container-compose: Manage Apple Container with Docker Compose files
+context7-mcp: Up-to-date code documentation for LLMs and AI code editors
+copyparty: Portable file server
+corepack: Package acting as bridge between Node projects and their package managers
+cpptrace: Simple, portable, and self-contained stacktrace library for C++11 and newer
+ctrld: Highly configurable, multi-protocol DNS forwarding proxy
+dagu: Lightweight and powerful workflow engine
+darker: Apply Black formatting only in regions changed since last commit
+dash-mpd-cli: Download media content from a DASH-MPEG or DASH-WebM MPD manifest
+deck: Creates slide deck using Markdown and Google Slides
+dexidp: OpenID Connect Identity and OAuth 2.0 Provider
+dnglab: Camera RAW to DNG file format converter
+dnote: Simple command-line notebook
+docker-compose-langserver: Language service for Docker Compose documents
+docker-debug: Use new container attach on already container go on debug
+docmd: Minimal Markdown documentation generator
+doge: Command-line DNS client
+doh: Stand-alone DNS-over-HTTPS resolver using libcurl
+domain-check: CLI tool for checking domain availability using RDAP and WHOIS protocols
+doxx: Terminal document viewer for .docx files
+dqlite: Embeddable, replicated and fault-tolerant SQLite-powered engine
+dstp: Run common networking tests against your site
+dumbpipe: Unix pipes between devices
+eigen@3: C++ template library for linear algebra
+electric: Real-time sync for Postgres
+emmylua_ls: Lua Language Server
+endlessh: SSH tarpit that slowly sends an endless banner
+entt: Fast and reliable entity-component system for C++
+erlang-language-platform: LSP server and CLI for the Erlang programming language
+errcheck: Finds silently ignored errors in Go code
+faceprints: Detect and label images of faces using local Vision.framework models
+fake-gcs-server: Emulator for Google Cloud Storage API
+fakesteak: ASCII Matrix-like steak demo
+fastmcp: Fast, Pythonic way to build MCP servers and clients
+fennel-ls: Language Server for Fennel
+fernflower: Advanced decompiler for Java bytecode
+ffmpeg@7: Play, record, convert, and stream audio and video
+filebrowser: Web File Browser
+filen-cli: Interface with Filen, an end-to-end encrypted cloud storage service
+fjira: Fuzzy-find cli jira interface
+flexget: Multipurpose automation tool for content
+forgejo: Self-hosted lightweight software forge
+framework-tool-tui: TUI for controlling and monitoring Framework Computers hardware
+fx-upscale: Metal-powered video upscaling
+gbox: Provides environments for AI Agents to operate computer and mobile devices
+gcl: GNU Common Lisp
+getparty: Multi-part HTTP download manager
+ggc: Modern Git CLI
+ghidra: Multi-platform software reverse engineering framework
+gitea-mcp-server: Interactive with Gitea instances with MCP
+gitingest: Turn any Git repository into a prompt-friendly text ingest for LLMs
+gitlab-ci-linter: Command-line tool to lint GitLab CI YAML files
+gitlab-release-cli: Toolset to create, retrieve and update releases on GitLab
+gitmux: Git status in tmux status bar
+glom: Declarative object transformer and formatter, for conglomerating nested data
+gnome-papers: Document viewer for PDF and other document formats aimed at the GNOME desktop
+go-librespot: Spotify client
+go-passbolt-cli: CLI for passbolt
+go@1.24: Open source programming language to build simple/reliable/efficient software
+gocheat: TUI Cheatsheet for keybindings, hotkeys and more
+goclone: Website Cloner
+gonzo: Log analysis TUI
+goodls: CLI tool to download shared files and folders from Google Drive
+gpgmepp: C++ bindings for gpgme
+gpgmepy: Python bindings for gpgme
+gphotos-uploader-cli: Command-line tool to mass upload media folders to Google Photos
+gradle@8: Open-source build automation tool based on the Groovy and Kotlin DSL
+granted: Easiest way to access your cloud
+gravitino: High-performance, geo-distributed, and federated metadata lake
+gtrash: Featureful Trash CLI manager: alternative to rm and trash-cli
+hack-browser-data: Command-line tool for decrypting and exporting browser data
+haraka: Fast, highly extensible, and event driven SMTP server
+harbor-cli: CLI for Harbor container registry
+hierarchy-builder: High level commands to declare a hierarchy based on packed classes
+httptap: HTTP request visualizer with phase-by-phase timing breakdown
+ifopt: Light-weight C++ Interface to Nonlinear Programming Solvers
+igrep: Interactive grep
+imagineer: Image processing and conversion from the terminal
+influxdb@2: Time series, events, and metrics database
+jiratui: Textual User Interface for interacting with Atlassian Jira from your shell
+jqp: TUI playground to experiment and play with jq
+kekkai: File integrity monitoring tool
+kibi: Text editor in ≤1024 lines of code, written in Rust
+kimi-cli: CLI agent for MoonshotAI Kimi platform
+kissat: Bare metal SAT solver
+kokkos: C++ Performance Portability Ecosystem for parallel execution and abstraction
+komac: Community Manifest Creator for Windows Package Manager (WinGet)
+krane: Kubernetes deploy tool with rollout verification
+kubernetes-cli@1.33: Kubernetes command-line interface
+kubernetes-mcp-server: MCP server for Kubernetes
+lazycontainer: Terminal UI for Apple Containers
+lazyssh: Terminal-based SSH manager
+libayatana-appindicator: Ayatana Application Indicators Shared Library
+libayatana-indicator: Ayatana Indicators Shared Library
+libcaption: Free open-source CEA608 / CEA708 closed-caption encoder/decoder
+libcpucycles: Microlibrary for counting CPU cycles
+libdatrie: Double-Array Trie Library
+libjodycode: Shared code used by several utilities written by Jody Bruchon
+libpq@17: Postgres C API library
+libptytty: Library for OS-independent pseudo-TTY management
+libselinux: SELinux library and simple utilities
+libsepol: SELinux binary policy manipulation library
+libudfread: Universal Disk Format reader
+limine: Modern, advanced, portable, multiprotocol bootloader and boot manager
+litehtml: Fast and lightweight HTML/CSS rendering engine
+lld@20: LLVM Project Linker
+llvm@20: Next-gen compiler infrastructure
+lnk: Git-native dotfiles management that doesn't suck
+lstr: Fast, minimalist directory tree viewer
+lue-reader: Terminal eBook reader with text-to-speech and multi-format support
+mac-cleanup-py: Python cleanup script for macOS
+manifold: Geometry library for topological robustness
+mariadb@11.8: Drop-in replacement for MySQL
+mark: Sync your markdown files with Confluence pages
+mcp-atlassian: MCP server for Atlassian tools (Confluence, Jira)
+mcp-get: CLI for discovering, installing, and managing MCP servers
+mcp-google-sheets: MCP server integrates with your Google Drive and Google Sheets
+mcp-grafana: MCP server for Grafana
+mcp-proxy: Bridge between Streamable HTTP and stdio MCP transports
+mcp-publisher: Publisher CLI tool for the Official Model Context Protocol (MCP) Registry
+mcp-server-chart: MCP with 25+ @antvis charts for visualization, generation, and analysis
+mcp-server-kubernetes: MCP Server for kubernetes management commands
+mcphost: CLI host for LLMs to interact with tools via MCP
+mcptools: CLI for interacting with MCP servers using both stdio and HTTP transport
+mdserve: Fast markdown preview server with live reload and theme support
+media-control: Control and observe media playback from the command-line
+melt: Backup and restore Ed25519 SSH keys with seed words
+memtier_benchmark: Redis and Memcache traffic generation and benchmarking tool
+mk: Wrapper for auto-detecting build and test commands in a repository
+mklittlefs: Creates LittleFS images for ESP8266, ESP32, Pico RP2040, and RP2350
+mlx-lm: Run LLMs with MLX
+moribito: TUI for LDAP Viewing/Queries
+msedit: Simple text editor with clickable interface
+msolve: Library for Polynomial System Solving through Algebraic Methods
+mysql-to-sqlite3: Transfer data from MySQL to SQLite
+n8n-mcp: MCP for Claude Desktop, Claude Code, Windsurf, Cursor to build n8n workflows
+nanoarrow: Helpers for Arrow C Data & Arrow C Stream interfaces
+nanobot: Build MCP Agents
+nessie: Transactional Catalog for Data Lakes with Git-like semantics
+netscanner: Network scanner with features like WiFi scanning, packetdump and more
+nextflow: Reproducible scientific workflows
+ni: Selects the right Node package manager based on lockfiles
+nifi-toolkit: Command-line utilities to setup and support NiFi
+node@24: Open-source, cross-platform JavaScript runtime environment
+notion-mcp-server: MCP Server for Notion
+npq: Audit npm packages before you install them
+nuxi: Nuxt CLI (nuxi) for creating and managing Nuxt projects
+nyan: Colorizing `cat` command with syntax highlighting
+oasis: CLI for interacting with the Oasis Protocol network
+oatpp: Light and powerful C++ web framework
+omekasy: Converts alphanumeric input to various Unicode styles
+omnara: Talk to Your AI Agents from Anywhere
+openapi: CLI tools for working with OpenAPI, Arazzo and Overlay specifications
+openapv: Open Advanced Professional Video Codec
+openblas64: Optimized BLAS library
+opencode: AI coding agent, built for the terminal
+openlist: New AList fork addressing anti-trust issues
+openssl@3.5: Cryptography and SSL/TLS Toolkit
+pelican: Static site generator that supports Markdown and reST syntax
+permify: Open-source authorization service & policy engine based on Google Zanzibar
+pg-schema-diff: Diff Postgres schemas and generating SQL migrations
+pgstream: PostgreSQL replication with DDL changes
+php-intl: PHP internationalization extension
+playwright-mcp: MCP server for Playwright
+plutobook: Paged HTML Rendering Library
+plutoprint: Generate PDFs and Images from HTML
+podcast-archiver: Archive all episodes from your favorite podcasts
+portable-libffi: Portable Foreign Function Interface library
+portable-libxcrypt: Extended crypt library for descrypt, md5crypt, bcrypt, and others
+portable-libyaml: YAML Parser
+portable-openssl: Cryptography and SSL/TLS Toolkit
+portable-ruby: Powerful, clean, object-oriented scripting language
+portable-zlib: General-purpose lossless data-compression library
+postgres-language-server: Language Server for Postgres
+postgresql@18: Object-relational database system
+precice: Coupling library for partitioned multi-physics simulations
+privatebin-cli: CLI for creating and managing PrivateBin pastes
+protozero: Minimalist protocol buffer decoder and encoder in C++
+pulp-cli: Command-line interface for Pulp 3
+pydantic-core: Core functionality for Pydantic validation and serialization
+pyrefly: Fast type checker and IDE for Python
+pyscn: Intelligent Python Code Quality Analyzer
+python-gdbm@3.14: Python interface to gdbm
+python-tk@3.14: Python interface to Tcl/Tk
+python@3.14: Interpreted, interactive, object-oriented programming language
+q: Tiny command-line DNS client with support for UDP, TCP, DoT, DoH, DoQ and ODoH
+qcoro6: C++ Coroutines for Qt
+qman: Modern man page viewer
+qt3d: Provides functionality for near-realtime simulation systems
+qt5compat: Qt 5 Core APIs that were removed in Qt 6
+qtbase: Cross-platform application and UI framework
+qtcharts: UI Components for displaying visually pleasing charts
+qtconnectivity: Provides access to Bluetooth hardware
+qtdatavis3d: Provides functionality for 3D visualization
+qtdeclarative: QML, Qt Quick and several related modules
+qtgraphs: Provides functionality for 2D and 3D graphs
+qtgrpc: Provides support for communicating with gRPC services
+qthttpserver: Framework for embedding an HTTP server into a Qt application
+qtimageformats: Plugins for additional image formats: TIFF, MNG, TGA, WBMP
+qtlanguageserver: Implementation of the Language Server Protocol and JSON-RPC
+qtlocation: Provides C++ interfaces to retrieve location and navigational information
+qtlottie: Display graphics and animations exported by the Bodymovin plugin
+qtmultimedia: Provides APIs for playing back and recording audiovisual content
+qtnetworkauth: Provides support for OAuth-based authorization to online services
+qtpositioning: Provides access to position, satellite info and area monitoring classes
+qtquick3d: Provides a high-level API for creating 3D content or UIs based on Qt Quick
+qtquick3dphysics: High-level QML module adding physical simulation capabilities to Qt Quick 3D
+qtquickeffectmaker: Tool to create custom Qt Quick shader effects
+qtquicktimeline: Enables keyframe-based animations and parameterization
+qtremoteobjects: Provides APIs for inter-process communication
+qtscxml: Provides functionality to create state machines from SCXML files
+qtsensors: Provides access to sensors via QML and C++ interfaces
+qtserialbus: Provides access to serial industrial bus interfaces
+qtserialport: Provides classes to interact with hardware and virtual serial ports
+qtshadertools: Provides tools for the cross-platform Qt shader pipeline
+qtspeech: Enables access to text-to-speech engines
+qtsvg: Classes for displaying the contents of SVG files
+qttools: Facilitate the design, development, testing and deployment of applications
+qttranslations: Qt translation catalogs
+qtvirtualkeyboard: Provides an input framework and reference keyboard frontend
+qtwayland: Wayland platform plugin and QtWaylandCompositor API
+qtwebchannel: Bridges the gap between Qt applications and HTML/JavaScript
+qtwebengine: Provides functionality for rendering regions of dynamic web content
+qtwebsockets: Provides WebSocket communication compliant with RFC 6455
+qtwebview: Displays web content in a QML application
+quadcastrgb: Set RGB lights on HyperX QuadCast S and Duocast microphones
+quint: Core tool for the Quint specification language
+qwen-code: AI-powered command-line workflow tool for developers
+radvd: IPv6 Router Advertisement Daemon
+rails-mcp-server: MCP server for Rails applications
+recur: Retry a command with exponential backoff and jitter
+rggen: Code generation tool for control and status registers
+rmpc: Terminal based Media Player Client with album art support
+rocq-elpi: Elpi extension language for Rocq
+rolesanywhere-credential-helper: Manages getting temporary security credentials from IAM Roles Anywhere
+rulesync: Unified AI rules management CLI tool
+rv: Ruby version manager
+salesforce-mcp: MCP Server for interacting with Salesforce instances
+sarif-tools: Set of command-line tools and Python library for working with SARIF files
+secretspec: Declarative secrets management tool
+seqan3: Modern C++ library for sequence analysis
+shimmy: Small local inference server with OpenAI-compatible GGUF endpoints
+shortest: AI-powered natural language end-to-end testing framework
+slack-mcp-server: Powerful MCP Slack Server with multiple transports and smart history fetch logic
+snooze: Run a command at a particular time
+specify: Toolkit to help you get started with Spec-Driven Development
+sqlite3-to-mysql: Transfer data from SQLite to MySQL
+standardebooks: Tools for producing ebook files
+stu: TUI explorer application for Amazon S3 (AWS S3)
+supabase: Open source Firebase alternative
+supabase-mcp-server: MCP Server for Supabase
+swag: Automatically generate RESTful API documentation with Swagger 2.0 for Go
+taskline: Tasks, boards & notes for the command-line habitat
+taze: Modern cli tool that keeps your deps fresh
+tdd-guard: Automated TDD enforcement for Claude Code
+teamtype: Peer-to-peer, editor-agnostic collaborative editing of local text files
+termsvg: Record, share and export your terminal as a animated SVG image
+terraform-mcp-server: MCP server for Terraform
+terratag: CLI to automate tagging for AWS, Azure & GCP resources in Terraform
+tfplugingen-openapi: OpenAPI to Terraform Provider Code Generation Specification
+tfstate-lookup: Lookup resource attributes in tfstate
+tiny-remapper: Tiny, efficient tool for remapping JAR files using "Tiny"-format mappings
+tkrzw: Set of implementations of DBM
+tombi: TOML formatter, linter and language server
+tracetest: Build integration and end-to-end tests
+tree-sitter-cli: Parser generator tool
+tweakcc: Customize your Claude Code themes, thinking verbs, and more
+two-ms: Detect secrets in files and communication platforms
+typtea: Minimal terminal-based typing speed tester
+unitycatalog: Open, Multi-modal Catalog for Data & AI
+uvwasi: WASI syscall API built atop libuv
+varlock: Add declarative schema to .env files using @env-spec decorator comments
+vgo: Project scaffolder for Go, written in Go
+vibe-log-cli: CLI tool for analyzing Claude Code sessions
+videoalchemy: Toolkit expanding video processing capabilities
+volcano-cli: CLI for Volcano, Cloud Native Batch System
+vsd: Download video streams over HTTP, DASH (.mpd), and HLS (.m3u8)
+vtcode: CLI Semantic Coding Agent
+wait4x: Wait for a port or a service to enter the requested state
+wal-g: Archival restoration tool for databases
+wassette: Security-oriented runtime that runs WebAssembly Components via MCP
+wayback: Archiving tool integrated with various archival services
+wgpu-native: Native WebGPU implementation based on wgpu-core
+wishlist: Single entrypoint for multiple SSH endpoints
+wuppiefuzz: Coverage-guided REST API fuzzer developed on top of LibAFL
+yamlresume: Resumes as code in YAML
+yuque-dl: Knowledge base downloader for Yuque
+zig@0.14: Programming language designed for robustness, optimality, and clarity
+zsv: Tabular data swiss-army knife CLI
+  UW PICO 5.09                                                          New Buffer
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                [ Read 1 line ]
+^G Get Help            ^O WriteOut            ^R Read File           ^Y Prev Pg             ^K Cut Text            ^C Cur Pos
+^X Exit                ^J Justify             ^W Where is            ^V Next Pg             ^U UnCut Text          ^T To Spell
+zuban: Python language server and type checker, written in Rust
+
+You have 7 outdated formulae installed.
+
+==> Fetching downloads for: ios-deploy
+==> Downloading https://ghcr.io/v2/homebrew/core/ios-deploy/manifests/1.12.2
+######################################################################################################################################## 100.0%
+==> Fetching ios-deploy
+==> Downloading https://ghcr.io/v2/homebrew/core/ios-deploy/blobs/sha256:91d82a87a7a1ed736955a407d2fba49053222fd3ab4a4af23123cb6fd6b7ad4b
+######################################################################################################################################## 100.0%
+==> Pouring ios-deploy--1.12.2.sonoma.bottle.tar.gz
+🍺  /usr/local/Cellar/ios-deploy/1.12.2: 6 files, 259KB
+==> Running `brew cleanup ios-deploy`...
+Disable this behaviour by setting `HOMEBREW_NO_INSTALL_CLEANUP=1`.
+Hide these hints with `HOMEBREW_NO_ENV_HINTS=1` (see `man brew`).
+==> `brew cleanup` has not been run in the last 30 days, running now...
+Disable this behaviour by setting `HOMEBREW_NO_INSTALL_CLEANUP=1`.
+Hide these hints with `HOMEBREW_NO_ENV_HINTS=1` (see `man brew`).
+Removing: /usr/local/Cellar/readline/8.2.13... (51 files, 1.6MB)
+Removing: /Users/amarpreetsingh/Library/Caches/Homebrew/portable-ruby-3.4.5.el_capitan.bottle.tar.gz... (11.2MB)
+Removing: /Users/amarpreetsingh/Library/Caches/Homebrew/bootsnap/291b443301cf9ac2eb18e6c9fed72311c4ae0dbaf247afeaf305a6b51d5d45b2... (632 files, 5MB)
+Removing: /Users/amarpreetsingh/Library/Logs/Homebrew/postgresql@14... (1.3KB)
+Removing: /Users/amarpreetsingh/Library/Logs/Homebrew/openssl@3... (64B)
+Removing: /Users/amarpreetsingh/Library/Logs/Homebrew/ca-certificates... (64B)
+Pruned 2 symbolic links from /usr/local
+➜  places git:(main) ✗ touch run-ios.sh
+
+➜  places git:(main) ✗ nano run-ios.sh
+
+➜  places git:(main) ✗ chmod +x run-ios.sh
+
+➜  places git:(main) ✗ ./run-ios.sh
+
+  UW PICO 5.09                                                          New Buffer
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                               [ Read 18 lines ]
+^G Get Help            ^O WriteOut            ^R Read File           ^Y Prev Pg             ^K Cut Text            ^C Cur Pos
+^X Exit                ^J Justify             ^W Where is            ^V Next Pg             ^U UnCut Text          ^T To Spell
+  UW PICO 5.09                                                       File: run-ios.sh
+
+#!/bin/bash
+
+DEVICE_ID="00008101-001D79A60C89001E"
+APP_NAME="places.app"
+
+echo "Cleaning & Building..."
+xcodebuild \
+  -project Places.xcodeproj \
+  -scheme places \
+  -configuration Debug \
+  -destination "platform=iOS,id=$DEVICE_ID" \
+  build | xcpretty
+
+APP_PATH=$(find ~/Library/Developer/Xcode/DerivedData -name "$APP_NAME" | head -n 1)
+
+echo "Installing & Launching on device..."
+ios-deploy --id $DEVICE_ID --bundle "$APP_PATH"
+
+
+
+
+
+
+
+
+
+
+^G Get Help            ^O WriteOut            ^R Read File           ^Y Prev Pg             ^K Cut Text            ^C Cur Pos
+^X Exit                ^J Justify             ^W Where is            ^V Next Pg             ^U UnCut Text          ^T To Spell#!/bin/bash
+
+DEVICE_ID="00008101-001D79A60C89001E"
+APP_NAME="places.app"
+
+echo "Cleaning & Building..."
+xcodebuild \
+  -project Places.xcodeproj \
+  -scheme places \
+  -configuration Debug \
+  -destination "platform=iOS,id=$DEVICE_ID" \
+  build | xcpretty
+
+APP_PATH=$(find ~/Library/Developer/Xcode/DerivedData -name "$APP_NAME" | head -n 1)
+
+echo "Installing & Launching on device..."
+ios-deploy --id $DEVICE_ID --bundle "$APP_PATH"
+

@@ -7,50 +7,67 @@
 
 import SwiftUI
 import SwiftData
+import CoreLocation
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
+    @State private var showCamera = false
+    @State private var capturedImage: UIImage?
+    @State private var capturedLocation: CLLocation?
+    @State private var showPlaces = false
 
     var body: some View {
-        NavigationSplitView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+        ZStack {
+            Text("Hello Amar")
+                .foregroundColor(.white)
+
+            if showCamera {
+                ZStack {
+                    CameraView(capturedImage: $capturedImage, capturedLocation: $capturedLocation, modelContext: modelContext)
+                        .edgesIgnoringSafeArea(.all)
+                        .onChange(of: capturedImage) { oldValue, newValue in
+                            // Reset captured image immediately to go back to camera
+                            if newValue != nil {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                    capturedImage = nil
+                                    capturedLocation = nil
+                                    showCamera = false
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                        showCamera = true
+                                    }
+                                }
+                            }
+                        }
+
+                    // Places button overlay on camera
+                    VStack {
+                        HStack {
+                            Button(action: {
+                                showPlaces = true
+                            }) {
+                                Text("Places")
+                                    .font(.headline)
+                                    .foregroundColor(.white)
+                                    .padding(.horizontal, 20)
+                                    .padding(.vertical, 12)
+                                    .background(.ultraThinMaterial)
+                                    .cornerRadius(20)
+                            }
+                            .padding(.top, 50)
+                            .padding(.leading, 20)
+                            Spacer()
+                        }
+                        Spacer()
                     }
                 }
-                .onDelete(perform: deleteItems)
+                .edgesIgnoringSafeArea(.all)
             }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
-            }
-        } detail: {
-            Text("Select an item")
         }
-    }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
+        .onAppear {
+            showCamera = true
         }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
-            }
+        .fullScreenCover(isPresented: $showPlaces) {
+            PlacesView()
         }
     }
 }
