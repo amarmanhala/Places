@@ -12,6 +12,7 @@ struct PhotoDetailView: View {
     @Environment(\.dismiss) var dismiss
     @Query(sort: \CapturedPhoto.timestamp, order: .reverse) private var allPhotos: [CapturedPhoto]
     let photo: CapturedPhoto
+    @State private var dragOffset: CGFloat = 0
 
     var locationText: String {
         if let city = photo.city, let country = photo.country {
@@ -145,5 +146,24 @@ struct PhotoDetailView: View {
             }
             .padding()
         }
+        .offset(y: dragOffset)
+        .scaleEffect(1 - (dragOffset / 1000))
+        .gesture(
+            DragGesture()
+                .onChanged { value in
+                    if value.translation.height > 0 {
+                        dragOffset = value.translation.height
+                    }
+                }
+                .onEnded { value in
+                    if value.translation.height > 100 {
+                        dismiss()
+                    } else {
+                        withAnimation(.spring()) {
+                            dragOffset = 0
+                        }
+                    }
+                }
+        )
     }
 }

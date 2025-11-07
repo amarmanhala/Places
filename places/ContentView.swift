@@ -39,24 +39,26 @@ struct ContentView: View {
                             }
                         }
 
-                    // Places button overlay on camera
+                    // Places button at top left aligned with flash button
                     VStack {
                         HStack {
                             Button(action: {
                                 showPlaces = true
                             }) {
                                 Text("Places")
-                                    .font(.headline)
+                                    .font(.system(size: 17, weight: .medium))
                                     .foregroundColor(.white)
                                     .padding(.horizontal, 20)
                                     .padding(.vertical, 12)
                                     .background(.ultraThinMaterial)
-                                    .cornerRadius(20)
+                                    .clipShape(Capsule())
                             }
-                            .padding(.top, 50)
-                            .padding(.leading, 20)
+                            .padding(.top, 60)
+                            .padding(.leading)
+
                             Spacer()
                         }
+
                         Spacer()
                     }
                 }
