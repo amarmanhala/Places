@@ -12,6 +12,7 @@ import Combine
 import Photos
 import SwiftData
 import Vision
+import MapKit
 
 struct CameraView: UIViewControllerRepresentable {
     @Binding var capturedImage: UIImage?
@@ -60,38 +61,105 @@ struct CameraView: UIViewControllerRepresentable {
 
                     // Extract text from image using Vision
                     self.extractText(from: image) { extractedText in
-                        // Perform reverse geocoding
-                        let geocoder = CLGeocoder()
-                        geocoder.reverseGeocodeLocation(location) { placemarks, error in
-                            let placemark = placemarks?.first
-                            let city = placemark?.locality
-                            let state = placemark?.administrativeArea
-                            let country = placemark?.country
+                        // If we extracted store name, search for nearby matching store
+                        if let storeName = extractedText, !storeName.isEmpty {
+                            print("🔍 Searching for nearby '\(storeName)'...")
 
-                            let photo = CapturedPhoto(
-                                timestamp: Date(),
-                                imageData: imageData,
-                                latitude: location.coordinate.latitude,
-                                longitude: location.coordinate.longitude,
-                                altitude: location.altitude,
-                                city: city,
-                                state: state,
-                                country: country,
-                                extractedText: extractedText
-                            )
+                            self.searchNearbyStore(storeName: storeName, nearLocation: location) { storeLocation, verifiedName, city, state, country, address, phoneNumber in
+                                // Use store location if found, otherwise use current location
+                                let finalLocation = storeLocation ?? location
+                                let finalName = verifiedName ?? extractedText
 
-                            self.modelContext.insert(photo)
-                            do {
-                                try self.modelContext.save()
-                                print("✅ Photo saved to SwiftData")
-                                if let city = city, let country = country {
-                                    print("📍 Location: \(city), \(state ?? ""), \(country)")
+                                // If store was found, we already have address components
+                                // Otherwise, reverse geocode current location
+                                if storeLocation != nil {
+                                    // Store found! Use its data
+                                    let photo = CapturedPhoto(
+                                        timestamp: Date(),
+                                        imageData: imageData,
+                                        latitude: finalLocation.coordinate.latitude,
+                                        longitude: finalLocation.coordinate.longitude,
+                                        altitude: finalLocation.altitude,
+                                        city: city,
+                                        state: state,
+                                        country: country,
+                                        address: address,
+                                        phoneNumber: phoneNumber,
+                                        extractedText: finalName
+                                    )
+
+                                    self.savePhoto(photo, city: city, state: state, country: country, text: finalName)
+                                } else {
+                                    // No store found, reverse geocode current location
+                                    let geocoder = CLGeocoder()
+                                    geocoder.reverseGeocodeLocation(finalLocation) { placemarks, error in
+                                        let placemark = placemarks?.first
+                                        let city = placemark?.locality
+                                        let state = placemark?.administrativeArea
+                                        let country = placemark?.country
+
+                                        // Build address from reverse geocode
+                                        var addressComponents: [String] = []
+                                        if let subThoroughfare = placemark?.subThoroughfare {
+                                            addressComponents.append(subThoroughfare)
+                                        }
+                                        if let thoroughfare = placemark?.thoroughfare {
+                                            addressComponents.append(thoroughfare)
+                                        }
+                                        let fullAddress = addressComponents.isEmpty ? nil : addressComponents.joined(separator: " ")
+
+                                        let photo = CapturedPhoto(
+                                            timestamp: Date(),
+                                            imageData: imageData,
+                                            latitude: finalLocation.coordinate.latitude,
+                                            longitude: finalLocation.coordinate.longitude,
+                                            altitude: finalLocation.altitude,
+                                            city: city,
+                                            state: state,
+                                            country: country,
+                                            address: fullAddress,
+                                            phoneNumber: nil,
+                                            extractedText: extractedText
+                                        )
+
+                                        self.savePhoto(photo, city: city, state: state, country: country, text: extractedText)
+                                    }
                                 }
-                                if let text = extractedText, !text.isEmpty {
-                                    print("📝 Extracted text: \(text)")
+                            }
+                        } else {
+                            // No text extracted, just reverse geocode current location
+                            let geocoder = CLGeocoder()
+                            geocoder.reverseGeocodeLocation(location) { placemarks, error in
+                                let placemark = placemarks?.first
+                                let city = placemark?.locality
+                                let state = placemark?.administrativeArea
+                                let country = placemark?.country
+
+                                // Build address from reverse geocode
+                                var addressComponents: [String] = []
+                                if let subThoroughfare = placemark?.subThoroughfare {
+                                    addressComponents.append(subThoroughfare)
                                 }
-                            } catch {
-                                print("❌ Error saving to SwiftData: \(error)")
+                                if let thoroughfare = placemark?.thoroughfare {
+                                    addressComponents.append(thoroughfare)
+                                }
+                                let fullAddress = addressComponents.isEmpty ? nil : addressComponents.joined(separator: " ")
+
+                                let photo = CapturedPhoto(
+                                    timestamp: Date(),
+                                    imageData: imageData,
+                                    latitude: location.coordinate.latitude,
+                                    longitude: location.coordinate.longitude,
+                                    altitude: location.altitude,
+                                    city: city,
+                                    state: state,
+                                    country: country,
+                                    address: fullAddress,
+                                    phoneNumber: nil,
+                                    extractedText: nil
+                                )
+
+                                self.savePhoto(photo, city: city, state: state, country: country, text: nil)
                             }
                         }
                     }
@@ -190,6 +258,90 @@ struct CameraView: UIViewControllerRepresentable {
                 } catch {
                     print("❌ Failed to perform text recognition: \(error.localizedDescription)")
                     completion(nil)
+                }
+            }
+        }
+
+        func savePhoto(_ photo: CapturedPhoto, city: String?, state: String?, country: String?, text: String?) {
+            self.modelContext.insert(photo)
+            do {
+                try self.modelContext.save()
+                print("✅ Photo saved to SwiftData")
+                if let city = city, let country = country {
+                    print("📍 Location: \(city), \(state ?? ""), \(country)")
+                }
+                if let text = text, !text.isEmpty {
+                    print("📝 Extracted text: \(text)")
+                }
+            } catch {
+                print("❌ Error saving to SwiftData: \(error)")
+            }
+        }
+
+        func searchNearbyStore(storeName: String, nearLocation: CLLocation, completion: @escaping (CLLocation?, String?, String?, String?, String?, String?, String?) -> Void) {
+            let request = MKLocalSearch.Request()
+            request.naturalLanguageQuery = storeName
+
+            // Search within 500m radius of current location
+            let region = MKCoordinateRegion(
+                center: nearLocation.coordinate,
+                latitudinalMeters: 500,
+                longitudinalMeters: 500
+            )
+            request.region = region
+
+            let search = MKLocalSearch(request: request)
+            search.start { response, error in
+                guard let response = response, !response.mapItems.isEmpty else {
+                    print("⚠️ No nearby stores found for '\(storeName)', using current location")
+                    completion(nil, nil, nil, nil, nil, nil, nil)
+                    return
+                }
+
+                // Find closest store to current location
+                let sortedByDistance = response.mapItems.sorted { item1, item2 in
+                    let loc1 = CLLocation(latitude: item1.placemark.coordinate.latitude,
+                                         longitude: item1.placemark.coordinate.longitude)
+                    let loc2 = CLLocation(latitude: item2.placemark.coordinate.latitude,
+                                         longitude: item2.placemark.coordinate.longitude)
+                    return nearLocation.distance(from: loc1) < nearLocation.distance(from: loc2)
+                }
+
+                if let nearestStore = sortedByDistance.first {
+                    let storeLocation = CLLocation(
+                        latitude: nearestStore.placemark.coordinate.latitude,
+                        longitude: nearestStore.placemark.coordinate.longitude
+                    )
+
+                    let distance = nearLocation.distance(from: storeLocation)
+                    print("🎯 Found '\(nearestStore.name ?? storeName)' at \(Int(distance))m away")
+
+                    // Extract address components
+                    let city = nearestStore.placemark.locality
+                    let state = nearestStore.placemark.administrativeArea
+                    let country = nearestStore.placemark.country
+                    let verifiedName = nearestStore.name
+
+                    // Build full street address
+                    var addressComponents: [String] = []
+                    if let subThoroughfare = nearestStore.placemark.subThoroughfare {
+                        addressComponents.append(subThoroughfare)
+                    }
+                    if let thoroughfare = nearestStore.placemark.thoroughfare {
+                        addressComponents.append(thoroughfare)
+                    }
+                    let fullAddress = addressComponents.isEmpty ? nil : addressComponents.joined(separator: " ")
+
+                    // Get phone number if available
+                    let phoneNumber = nearestStore.phoneNumber
+
+                    if let phone = phoneNumber {
+                        print("📞 Phone: \(phone)")
+                    }
+
+                    completion(storeLocation, verifiedName, city, state, country, fullAddress, phoneNumber)
+                } else {
+                    completion(nil, nil, nil, nil, nil, nil, nil)
                 }
             }
         }

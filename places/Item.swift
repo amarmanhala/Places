@@ -28,9 +28,11 @@ final class CapturedPhoto: Identifiable {
     var city: String?
     var state: String?
     var country: String?
+    var address: String?
+    var phoneNumber: String?
     var extractedText: String?
 
-    init(timestamp: Date, imageData: Data, latitude: Double, longitude: Double, altitude: Double, city: String? = nil, state: String? = nil, country: String? = nil, extractedText: String? = nil) {
+    init(timestamp: Date, imageData: Data, latitude: Double, longitude: Double, altitude: Double, city: String? = nil, state: String? = nil, country: String? = nil, address: String? = nil, phoneNumber: String? = nil, extractedText: String? = nil) {
         self.timestamp = timestamp
         self.imageData = imageData
         self.latitude = latitude
@@ -39,6 +41,8 @@ final class CapturedPhoto: Identifiable {
         self.city = city
         self.state = state
         self.country = country
+        self.address = address
+        self.phoneNumber = phoneNumber
         self.extractedText = extractedText
     }
 }

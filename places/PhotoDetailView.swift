@@ -17,6 +17,7 @@ struct PhotoDetailView: View {
     @State private var showDeleteConfirmation = false
     @State private var showInfoSheet = true
     @State private var dragOffset: CGFloat = 0
+    @State private var selectedDetent: PresentationDetent = .height(300)
 
     var locationText: String {
         if let city = photo.city, let country = photo.country {
@@ -71,7 +72,7 @@ struct PhotoDetailView: View {
                 onDelete: deletePhoto,
                 onDismiss: { dismiss() }
             )
-            .presentationDetents([.height(300), .large])
+            .presentationDetents([.height(90), .height(300), .large], selection: $selectedDetent)
             .presentationDragIndicator(.visible)
             .presentationBackgroundInteraction(.enabled)
             .interactiveDismissDisabled()
@@ -149,26 +150,53 @@ struct PhotoInfoSheet: View {
                 VStack(alignment: .leading, spacing: 20) {
                     // Full address above direction button
                     VStack(alignment: .leading, spacing: 4) {
+                        // Street address
+                        if let address = photo.address, !address.isEmpty {
+                            Text(address)
+                                .font(.system(size: 16))
+                                .foregroundColor(.secondary)
+                        }
+
+                        // City, State, Country
                         Text(locationText)
                             .font(.system(size: 16))
                             .foregroundColor(.secondary)
                     }
 
-                // Get direction button
-                Button(action: {
-                    openInMaps()
-                }) {
-                    HStack {
-                        Image(systemName: "location.fill")
-                            .font(.system(size: 18))
-                        Text("Get direction")
-                            .font(.system(size: 17, weight: .semibold))
+                // Call and Get direction buttons
+                HStack(spacing: 12) {
+                    // Call button (if phone number available)
+                    if let phoneNumber = photo.phoneNumber, !phoneNumber.isEmpty {
+                        Button(action: {
+                            if let url = URL(string: "tel://\(phoneNumber.replacingOccurrences(of: " ", with: ""))") {
+                                UIApplication.shared.open(url)
+                            }
+                        }) {
+                            Image(systemName: "phone.fill")
+                                .font(.system(size: 18))
+                                .foregroundColor(.white)
+                                .frame(width: 60, height: 54)
+                                .background(Color.blue)
+                                .cornerRadius(12)
+                        }
                     }
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 16)
-                    .background(Color.blue)
-                    .cornerRadius(12)
+
+                    // Get direction button
+                    Button(action: {
+                        openInMaps()
+                    }) {
+                        HStack {
+                            Image(systemName: "location.fill")
+                                .font(.system(size: 18))
+                            Text("Get direction")
+                                .font(.system(size: 17, weight: .semibold))
+                        }
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 16)
+                        .background(Color.blue)
+                        .cornerRadius(12)
+                    }
                 }
 
                 // Details section
