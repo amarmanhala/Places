@@ -11,6 +11,7 @@ import CoreLocation
 import Combine
 import Photos
 import SwiftData
+import Vision
 
 struct CameraView: UIViewControllerRepresentable {
     @Binding var capturedImage: UIImage?
@@ -53,38 +54,45 @@ struct CameraView: UIViewControllerRepresentable {
                 parent.capturedImage = image
                 parent.capturedLocation = locationManager.currentLocation
 
-                // Save to SwiftData with reverse geocoding
+                // Save to SwiftData with reverse geocoding and text extraction
                 if let imageData = image.jpegData(compressionQuality: 0.8),
                    let location = locationManager.currentLocation {
 
-                    // Perform reverse geocoding
-                    let geocoder = CLGeocoder()
-                    geocoder.reverseGeocodeLocation(location) { placemarks, error in
-                        let placemark = placemarks?.first
-                        let city = placemark?.locality
-                        let state = placemark?.administrativeArea
-                        let country = placemark?.country
+                    // Extract text from image using Vision
+                    self.extractText(from: image) { extractedText in
+                        // Perform reverse geocoding
+                        let geocoder = CLGeocoder()
+                        geocoder.reverseGeocodeLocation(location) { placemarks, error in
+                            let placemark = placemarks?.first
+                            let city = placemark?.locality
+                            let state = placemark?.administrativeArea
+                            let country = placemark?.country
 
-                        let photo = CapturedPhoto(
-                            timestamp: Date(),
-                            imageData: imageData,
-                            latitude: location.coordinate.latitude,
-                            longitude: location.coordinate.longitude,
-                            altitude: location.altitude,
-                            city: city,
-                            state: state,
-                            country: country
-                        )
+                            let photo = CapturedPhoto(
+                                timestamp: Date(),
+                                imageData: imageData,
+                                latitude: location.coordinate.latitude,
+                                longitude: location.coordinate.longitude,
+                                altitude: location.altitude,
+                                city: city,
+                                state: state,
+                                country: country,
+                                extractedText: extractedText
+                            )
 
-                        self.modelContext.insert(photo)
-                        do {
-                            try self.modelContext.save()
-                            print("✅ Photo saved to SwiftData")
-                            if let city = city, let country = country {
-                                print("📍 Location: \(city), \(state ?? ""), \(country)")
+                            self.modelContext.insert(photo)
+                            do {
+                                try self.modelContext.save()
+                                print("✅ Photo saved to SwiftData")
+                                if let city = city, let country = country {
+                                    print("📍 Location: \(city), \(state ?? ""), \(country)")
+                                }
+                                if let text = extractedText, !text.isEmpty {
+                                    print("📝 Extracted text: \(text)")
+                                }
+                            } catch {
+                                print("❌ Error saving to SwiftData: \(error)")
                             }
-                        } catch {
-                            print("❌ Error saving to SwiftData: \(error)")
                         }
                     }
                 }
@@ -123,6 +131,65 @@ struct CameraView: UIViewControllerRepresentable {
                     } else if let error = error {
                         print("❌ Error saving photo: \(error.localizedDescription)")
                     }
+                }
+            }
+        }
+
+        func extractText(from image: UIImage, completion: @escaping (String?) -> Void) {
+            guard let cgImage = image.cgImage else {
+                completion(nil)
+                return
+            }
+
+            let request = VNRecognizeTextRequest { request, error in
+                guard error == nil else {
+                    print("❌ Text recognition error: \(error!.localizedDescription)")
+                    completion(nil)
+                    return
+                }
+
+                guard let observations = request.results as? [VNRecognizedTextObservation] else {
+                    completion(nil)
+                    return
+                }
+
+                // Filter and sort by confidence and size
+                let recognizedTexts = observations.compactMap { observation -> (text: String, confidence: Float, size: CGFloat)? in
+                    guard let candidate = observation.topCandidates(1).first,
+                          candidate.confidence > 0.5 else { // Only high confidence text
+                        return nil
+                    }
+
+                    // Calculate approximate text size from bounding box
+                    let boundingBox = observation.boundingBox
+                    let size = boundingBox.width * boundingBox.height
+
+                    return (candidate.string, candidate.confidence, size)
+                }
+
+                // Sort by size (larger text first) then by confidence
+                let sortedTexts = recognizedTexts
+                    .sorted { $0.size > $1.size }
+                    .map { $0.text }
+
+                // Debug: print all recognized text
+                print("📝 All recognized text: \(sortedTexts)")
+
+                // Take only the most prominent text (likely the store sign)
+                let extractedText = sortedTexts.first
+                completion(extractedText)
+            }
+
+            request.recognitionLevel = .accurate
+            request.usesLanguageCorrection = true
+
+            let handler = VNImageRequestHandler(cgImage: cgImage, options: [:])
+            DispatchQueue.global(qos: .userInitiated).async {
+                do {
+                    try handler.perform([request])
+                } catch {
+                    print("❌ Failed to perform text recognition: \(error.localizedDescription)")
+                    completion(nil)
                 }
             }
         }

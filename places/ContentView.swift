@@ -18,8 +18,7 @@ struct ContentView: View {
 
     var body: some View {
         ZStack {
-            Text("Hello Amar")
-                .foregroundColor(.white)
+            
 
             if showCamera {
                 ZStack {
@@ -46,11 +45,10 @@ struct ContentView: View {
                                 showPlaces = true
                             }) {
                                 Text("Places")
-                                    .font(.system(size: 17, weight: .medium))
                                     .foregroundColor(.white)
                                     .padding(.horizontal, 20)
                                     .padding(.vertical, 12)
-                                    .background(.ultraThinMaterial)
+                                    .background(.secondary)
                                     .clipShape(Capsule())
                             }
                             .padding(.top, 60)
