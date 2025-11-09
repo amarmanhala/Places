@@ -11,64 +11,14 @@ import CoreLocation
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
-    @State private var showCamera = false
-    @State private var capturedImage: UIImage?
-    @State private var capturedLocation: CLLocation?
     @State private var showPlaces = false
 
     var body: some View {
-        ZStack {
-            
-
-            if showCamera {
-                ZStack {
-                    CameraView(capturedImage: $capturedImage, capturedLocation: $capturedLocation, modelContext: modelContext)
-                        .edgesIgnoringSafeArea(.all)
-                        .onChange(of: capturedImage) { oldValue, newValue in
-                            // Reset captured image immediately to go back to camera
-                            if newValue != nil {
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                                    capturedImage = nil
-                                    capturedLocation = nil
-                                    showCamera = false
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                                        showCamera = true
-                                    }
-                                }
-                            }
-                        }
-
-                    // Places button at top left aligned with flash button
-                    VStack {
-                        HStack {
-                            Button(action: {
-                                showPlaces = true
-                            }) {
-                                Text("Places")
-                                    .foregroundColor(.white)
-                                    .padding(.horizontal, 20)
-                                    .padding(.vertical, 12)
-                                    .background(.secondary)
-                                    .clipShape(Capsule())
-                            }
-                            .padding(.top, 60)
-                            .padding(.leading)
-
-                            Spacer()
-                        }
-
-                        Spacer()
-                    }
-                }
-                .edgesIgnoringSafeArea(.all)
+        CustomCameraView(modelContext: modelContext, showPlacesView: $showPlaces)
+            .ignoresSafeArea()
+            .fullScreenCover(isPresented: $showPlaces) {
+                PlacesView()
             }
-        }
-        .onAppear {
-            showCamera = true
-        }
-        .fullScreenCover(isPresented: $showPlaces) {
-            PlacesView()
-        }
     }
 }
 
