@@ -156,6 +156,7 @@ struct PhotoPreviewView: View {
     @State private var country: String?
     @State private var address: String?
     @State private var phoneNumber: String?
+    @State private var category: String?
     @State private var selectedDetent: PresentationDetent = .height(300)
 
     var locationText: String {
@@ -202,6 +203,7 @@ struct PhotoPreviewView: View {
                 country: country,
                 address: address,
                 phoneNumber: phoneNumber,
+                category: category,
                 locationText: locationText,
                 onRetake: onRetake,
                 onDone: {
@@ -229,7 +231,7 @@ struct PhotoPreviewView: View {
 
             // Search for nearby store if text was found
             if let storeName = text, !storeName.isEmpty, let location = locationManager.currentLocation {
-                searchNearbyStore(storeName: storeName, nearLocation: location) { storeLocation, verifiedName, foundCity, foundState, foundCountry, foundAddress, foundPhone in
+                searchNearbyStore(storeName: storeName, nearLocation: location) { storeLocation, verifiedName, foundCity, foundState, foundCountry, foundAddress, foundPhone, poiCategory in
                     DispatchQueue.main.async {
                         if storeLocation != nil {
                             self.extractedText = verifiedName ?? text
@@ -238,6 +240,7 @@ struct PhotoPreviewView: View {
                             self.country = foundCountry
                             self.address = foundAddress
                             self.phoneNumber = foundPhone
+                            self.category = CategoryHelper.categorize(poiCategory: poiCategory, extractedText: verifiedName ?? text)
                         } else {
                             reverseGeocodeLocation()
                         }
@@ -268,6 +271,7 @@ struct PhotoPreviewView: View {
                     addressComponents.append(thoroughfare)
                 }
                 self.address = addressComponents.isEmpty ? nil : addressComponents.joined(separator: " ")
+                self.category = CategoryHelper.categorize(poiCategory: nil, extractedText: self.extractedText)
             }
         }
     }
@@ -285,12 +289,14 @@ struct PhotoPreviewView: View {
             if let storeName = extractedText, !storeName.isEmpty {
                 print("🔍 Searching for nearby '\(storeName)'...")
 
-                searchNearbyStore(storeName: storeName, nearLocation: location) { storeLocation, verifiedName, city, state, country, address, phoneNumber in
+                searchNearbyStore(storeName: storeName, nearLocation: location) { storeLocation, verifiedName, city, state, country, address, phoneNumber, poiCategory in
                     let finalLocation = storeLocation ?? location
                     let finalName = verifiedName ?? extractedText
 
                     if storeLocation != nil {
-                        // Store found! Use its data
+                        // Store found! Use its data and categorize
+                        let category = CategoryHelper.categorize(poiCategory: poiCategory, extractedText: finalName)
+
                         let photo = CapturedPhoto(
                             timestamp: Date(),
                             imageData: imageData,
@@ -302,7 +308,8 @@ struct PhotoPreviewView: View {
                             country: country,
                             address: address,
                             phoneNumber: phoneNumber,
-                            extractedText: finalName
+                            extractedText: finalName,
+                            category: category
                         )
 
                         savePhoto(photo, city: city, state: state, country: country, text: finalName)
@@ -338,6 +345,9 @@ struct PhotoPreviewView: View {
             }
             let fullAddress = addressComponents.isEmpty ? nil : addressComponents.joined(separator: " ")
 
+            // Categorize using keyword fallback (no POI category available)
+            let category = CategoryHelper.categorize(poiCategory: nil, extractedText: extractedText)
+
             let photo = CapturedPhoto(
                 timestamp: Date(),
                 imageData: imageData,
@@ -349,7 +359,8 @@ struct PhotoPreviewView: View {
                 country: country,
                 address: fullAddress,
                 phoneNumber: nil,
-                extractedText: extractedText
+                extractedText: extractedText,
+                category: category
             )
 
             savePhoto(photo, city: city, state: state, country: country, text: extractedText)
@@ -380,7 +391,7 @@ struct PhotoPreviewView: View {
         }
     }
 
-    func searchNearbyStore(storeName: String, nearLocation: CLLocation, completion: @escaping (CLLocation?, String?, String?, String?, String?, String?, String?) -> Void) {
+    func searchNearbyStore(storeName: String, nearLocation: CLLocation, completion: @escaping (CLLocation?, String?, String?, String?, String?, String?, String?, MKPointOfInterestCategory?) -> Void) {
         let request = MKLocalSearch.Request()
         request.naturalLanguageQuery = storeName
 
@@ -395,7 +406,7 @@ struct PhotoPreviewView: View {
         search.start { response, error in
             guard let response = response, !response.mapItems.isEmpty else {
                 print("⚠️ No nearby stores found for '\(storeName)', using current location")
-                completion(nil, nil, nil, nil, nil, nil, nil)
+                completion(nil, nil, nil, nil, nil, nil, nil, nil)
                 return
             }
 
@@ -430,14 +441,18 @@ struct PhotoPreviewView: View {
                 }
                 let fullAddress = addressComponents.isEmpty ? nil : addressComponents.joined(separator: " ")
                 let phoneNumber = nearestStore.phoneNumber
+                let poiCategory = nearestStore.pointOfInterestCategory
 
                 if let phone = phoneNumber {
                     print("📞 Phone: \(phone)")
                 }
+                if let poi = poiCategory {
+                    print("🏷️ Category: \(poi.rawValue)")
+                }
 
-                completion(storeLocation, verifiedName, city, state, country, fullAddress, phoneNumber)
+                completion(storeLocation, verifiedName, city, state, country, fullAddress, phoneNumber, poiCategory)
             } else {
-                completion(nil, nil, nil, nil, nil, nil, nil)
+                completion(nil, nil, nil, nil, nil, nil, nil, nil)
             }
         }
     }
@@ -529,6 +544,7 @@ struct PhotoPreviewInfoSheet: View {
     let country: String?
     let address: String?
     let phoneNumber: String?
+    let category: String?
     let locationText: String
     let onRetake: () -> Void
     let onDone: () -> Void
@@ -624,6 +640,17 @@ struct PhotoPreviewInfoSheet: View {
                         Text("Details")
                             .font(.system(size: 24, weight: .bold))
                             .foregroundColor(.primary)
+
+                        // Category
+                        if let category = category {
+                            HStack {
+                                Image(systemName: "tag.fill")
+                                    .foregroundColor(.secondary)
+                                Text(category)
+                                    .font(.system(size: 15))
+                                    .foregroundColor(.secondary)
+                            }
+                        }
 
                         // Timestamp
                         HStack {

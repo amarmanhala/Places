@@ -65,7 +65,7 @@ struct CameraView: UIViewControllerRepresentable {
                         if let storeName = extractedText, !storeName.isEmpty {
                             print("🔍 Searching for nearby '\(storeName)'...")
 
-                            self.searchNearbyStore(storeName: storeName, nearLocation: location) { storeLocation, verifiedName, city, state, country, address, phoneNumber in
+                            self.searchNearbyStore(storeName: storeName, nearLocation: location) { storeLocation, verifiedName, city, state, country, address, phoneNumber, poiCategory in
                                 // Use store location if found, otherwise use current location
                                 let finalLocation = storeLocation ?? location
                                 let finalName = verifiedName ?? extractedText
@@ -73,7 +73,9 @@ struct CameraView: UIViewControllerRepresentable {
                                 // If store was found, we already have address components
                                 // Otherwise, reverse geocode current location
                                 if storeLocation != nil {
-                                    // Store found! Use its data
+                                    // Store found! Use its data and categorize
+                                    let category = CategoryHelper.categorize(poiCategory: poiCategory, extractedText: finalName)
+
                                     let photo = CapturedPhoto(
                                         timestamp: Date(),
                                         imageData: imageData,
@@ -85,7 +87,8 @@ struct CameraView: UIViewControllerRepresentable {
                                         country: country,
                                         address: address,
                                         phoneNumber: phoneNumber,
-                                        extractedText: finalName
+                                        extractedText: finalName,
+                                        category: category
                                     )
 
                                     self.savePhoto(photo, city: city, state: state, country: country, text: finalName)
@@ -108,6 +111,9 @@ struct CameraView: UIViewControllerRepresentable {
                                         }
                                         let fullAddress = addressComponents.isEmpty ? nil : addressComponents.joined(separator: " ")
 
+                                        // Categorize using keyword fallback
+                                        let category = CategoryHelper.categorize(poiCategory: nil, extractedText: extractedText)
+
                                         let photo = CapturedPhoto(
                                             timestamp: Date(),
                                             imageData: imageData,
@@ -119,7 +125,8 @@ struct CameraView: UIViewControllerRepresentable {
                                             country: country,
                                             address: fullAddress,
                                             phoneNumber: nil,
-                                            extractedText: extractedText
+                                            extractedText: extractedText,
+                                            category: category
                                         )
 
                                         self.savePhoto(photo, city: city, state: state, country: country, text: extractedText)
@@ -145,6 +152,9 @@ struct CameraView: UIViewControllerRepresentable {
                                 }
                                 let fullAddress = addressComponents.isEmpty ? nil : addressComponents.joined(separator: " ")
 
+                                // No text to categorize, default to "Other"
+                                let category = "Other"
+
                                 let photo = CapturedPhoto(
                                     timestamp: Date(),
                                     imageData: imageData,
@@ -156,7 +166,8 @@ struct CameraView: UIViewControllerRepresentable {
                                     country: country,
                                     address: fullAddress,
                                     phoneNumber: nil,
-                                    extractedText: nil
+                                    extractedText: nil,
+                                    category: category
                                 )
 
                                 self.savePhoto(photo, city: city, state: state, country: country, text: nil)
@@ -278,7 +289,7 @@ struct CameraView: UIViewControllerRepresentable {
             }
         }
 
-        func searchNearbyStore(storeName: String, nearLocation: CLLocation, completion: @escaping (CLLocation?, String?, String?, String?, String?, String?, String?) -> Void) {
+        func searchNearbyStore(storeName: String, nearLocation: CLLocation, completion: @escaping (CLLocation?, String?, String?, String?, String?, String?, String?, MKPointOfInterestCategory?) -> Void) {
             let request = MKLocalSearch.Request()
             request.naturalLanguageQuery = storeName
 
@@ -294,7 +305,7 @@ struct CameraView: UIViewControllerRepresentable {
             search.start { response, error in
                 guard let response = response, !response.mapItems.isEmpty else {
                     print("⚠️ No nearby stores found for '\(storeName)', using current location")
-                    completion(nil, nil, nil, nil, nil, nil, nil)
+                    completion(nil, nil, nil, nil, nil, nil, nil, nil)
                     return
                 }
 
@@ -332,16 +343,20 @@ struct CameraView: UIViewControllerRepresentable {
                     }
                     let fullAddress = addressComponents.isEmpty ? nil : addressComponents.joined(separator: " ")
 
-                    // Get phone number if available
+                    // Get phone number and POI category
                     let phoneNumber = nearestStore.phoneNumber
+                    let poiCategory = nearestStore.pointOfInterestCategory
 
                     if let phone = phoneNumber {
                         print("📞 Phone: \(phone)")
                     }
+                    if let poi = poiCategory {
+                        print("🏷️ Category: \(poi.rawValue)")
+                    }
 
-                    completion(storeLocation, verifiedName, city, state, country, fullAddress, phoneNumber)
+                    completion(storeLocation, verifiedName, city, state, country, fullAddress, phoneNumber, poiCategory)
                 } else {
-                    completion(nil, nil, nil, nil, nil, nil, nil)
+                    completion(nil, nil, nil, nil, nil, nil, nil, nil)
                 }
             }
         }

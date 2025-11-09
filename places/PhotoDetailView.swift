@@ -205,6 +205,17 @@ struct PhotoInfoSheet: View {
                         .font(.system(size: 24, weight: .bold))
                         .foregroundColor(.primary)
 
+                    // Category
+                    if let category = photo.category {
+                        HStack {
+                            Image(systemName: "tag.fill")
+                                .foregroundColor(.secondary)
+                            Text(category)
+                                .font(.system(size: 15))
+                                .foregroundColor(.secondary)
+                        }
+                    }
+
                     // Timestamp
                     HStack {
                         Image(systemName: "clock")
