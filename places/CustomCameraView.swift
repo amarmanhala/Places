@@ -62,16 +62,18 @@ struct CustomCameraView: View {
                 // Bottom Controls (centered in remaining space)
                 HStack(alignment: .center) {
                     // Places Button (left)
-                    Button(action: {
+                    Button {
                         showPlacesView = true
-                    }) {
+                    } label: {
                         Image(systemName: "mappin.and.ellipse")
                             .font(.system(size: 22))
-                            .foregroundColor(.white)
+                            .foregroundColor(.primary)
                             .frame(width: 50, height: 50)
-                            .background(Color(uiColor: .systemGray6))
+                            .background(Color(.systemGray6))
                             .clipShape(Circle())
                     }
+
+                    
                     .padding(.leading, 35)
 
                     Spacer()

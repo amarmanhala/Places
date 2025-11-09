@@ -15,8 +15,6 @@ struct PlacesView: View {
     @State private var selectedTab = 0
     @State private var selectedPhoto: CapturedPhoto?
     @State private var selectedCategory: String?
-    @State private var showProfile = false
-    @State private var showSearch = false
 
     let columns = [
         GridItem(.flexible()),
@@ -36,44 +34,22 @@ struct PlacesView: View {
 
     var body: some View {
         NavigationStack {
-            ZStack {
-                TabView(selection: $selectedTab) {
-                    collectionView
-                        .tabItem {
-                            Image(systemName: "square.stack.3d.up")
-                            Text("Collection")
-                        }
-                        .tag(0)
-
-                    photosGrid
-                        .tabItem {
-                            Image(systemName: "photo")
-                            Text("All")
-                        }
-                        .tag(1)
-                }
-
-                // Floating Search Button
-                VStack {
-                    Spacer()
-                    HStack {
-                        Spacer()
-                        Button(action: {
-                            showSearch = true
-                        }) {
-                            Image(systemName: "magnifyingglass")
-                                .font(.system(size: 20, weight: .semibold))
-                                .foregroundColor(.white)
-                                .frame(width: 56, height: 56)
-                                .background(Color.blue)
-                                .clipShape(Circle())
-                                .shadow(color: .black.opacity(0.3), radius: 8, x: 0, y: 4)
-                        }
-                        .padding(.trailing, 20)
-                        .padding(.bottom, 80) // Above tab bar
+            TabView(selection: $selectedTab) {
+                collectionView
+                    .tabItem {
+                        Image(systemName: "square.stack.3d.up")
+                        Text("Collection")
                     }
-                }
+                    .tag(0)
+
+                photosGrid
+                    .tabItem {
+                        Image(systemName: "photo")
+                        Text("All")
+                    }
+                    .tag(1)
             }
+            .tint(.primary)
             .navigationTitle("Places")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -86,27 +62,12 @@ struct PlacesView: View {
                         Image(systemName: "chevron.left")
                     }
                 }
-
-                // Profile Button
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        showProfile = true
-                    } label: {
-                        Image(systemName: "person")
-                    }
-                }
             }
             .fullScreenCover(item: $selectedPhoto) { photo in
                 PhotoDetailView(photo: photo)
             }
-            .sheet(isPresented: $showProfile) {
-                ProfileView()
-            }
             .sheet(item: $selectedCategory) { category in
                 CategoryPhotosView(category: category, photos: groupedPhotos[category] ?? [], selectedPhoto: $selectedPhoto)
-            }
-            .sheet(isPresented: $showSearch) {
-                SearchView(photos: photos, selectedPhoto: $selectedPhoto)
             }
         }
     }
@@ -295,115 +256,4 @@ struct CategoryPhotosView: View {
 // Make String Identifiable for sheet presentation
 extension String: Identifiable {
     public var id: String { self }
-}
-
-// Search View
-struct SearchView: View {
-    @Environment(\.dismiss) var dismiss
-    let photos: [CapturedPhoto]
-    @Binding var selectedPhoto: CapturedPhoto?
-
-    @State private var searchText = ""
-
-    let columns = [
-        GridItem(.flexible()),
-        GridItem(.flexible()),
-        GridItem(.flexible())
-    ]
-
-    var filteredPhotos: [CapturedPhoto] {
-        if searchText.isEmpty {
-            return photos
-        } else {
-            return photos.filter { photo in
-                let searchLower = searchText.lowercased()
-
-                if let text = photo.extractedText?.lowercased(), text.contains(searchLower) {
-                    return true
-                }
-                if let category = photo.category?.lowercased(), category.contains(searchLower) {
-                    return true
-                }
-                if let city = photo.city?.lowercased(), city.contains(searchLower) {
-                    return true
-                }
-                if let state = photo.state?.lowercased(), state.contains(searchLower) {
-                    return true
-                }
-                if let country = photo.country?.lowercased(), country.contains(searchLower) {
-                    return true
-                }
-                if let address = photo.address?.lowercased(), address.contains(searchLower) {
-                    return true
-                }
-
-                return false
-            }
-        }
-    }
-
-    var body: some View {
-        NavigationStack {
-            Group {
-                if filteredPhotos.isEmpty {
-                    VStack(spacing: 20) {
-                        Image(systemName: "magnifyingglass")
-                            .font(.system(size: 60))
-                            .foregroundColor(.gray)
-
-                        if searchText.isEmpty {
-                            Text("Search for places")
-                                .font(.title2)
-                                .foregroundColor(.gray)
-
-                            Text("Try searching by name, location, or category")
-                                .font(.subheadline)
-                                .foregroundColor(.gray)
-                                .multilineTextAlignment(.center)
-                                .padding(.horizontal)
-                        } else {
-                            Text("No results for '\(searchText)'")
-                                .font(.title2)
-                                .foregroundColor(.gray)
-
-                            Text("Try a different search term")
-                                .font(.subheadline)
-                                .foregroundColor(.gray)
-                        }
-                    }
-                } else {
-                    ScrollView {
-                        LazyVGrid(columns: columns, spacing: 2) {
-                            ForEach(filteredPhotos, id: \.timestamp) { photo in
-                                if let uiImage = UIImage(data: photo.imageData) {
-                                    Image(uiImage: uiImage)
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fill)
-                                        .frame(
-                                            width: UIScreen.main.bounds.width / 3 - 2,
-                                            height: UIScreen.main.bounds.width / 3 - 2
-                                        )
-                                        .clipped()
-                                        .onTapGesture {
-                                            selectedPhoto = photo
-                                            dismiss()
-                                        }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            .searchable(text: $searchText, prompt: "Search places...")
-            .navigationTitle("Search")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Done") {
-                        dismiss()
-                    }
-                }
-            }
-        }
-    }
 }
