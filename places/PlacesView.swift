@@ -35,17 +35,17 @@ struct PlacesView: View {
     var body: some View {
         NavigationStack {
             TabView(selection: $selectedTab) {
-                collectionView
-                    .tabItem {
-                        Image(systemName: "square.stack.3d.up")
-                        Text("Collection")
-                    }
-                    .tag(0)
-
                 photosGrid
                     .tabItem {
                         Image(systemName: "photo")
                         Text("All")
+                    }
+                    .tag(0)
+
+                collectionView
+                    .tabItem {
+                        Image(systemName: "square.stack.3d.up")
+                        Text("Collection")
                     }
                     .tag(1)
             }

@@ -106,12 +106,14 @@ struct PhotoInfoSheet: View {
     let onDelete: () -> Void
     let onDismiss: () -> Void
 
+    @State private var showShareSheet = false
+
     var body: some View {
         VStack(spacing: 0) {
             // Top bar with share, title, and close buttons
             HStack(spacing: 16) {
                 Button(action: {
-                    print("Share button tapped")
+                    showShareSheet = true
                 }) {
                     Image(systemName: "square.and.arrow.up")
                         .font(.system(size: 24))
@@ -225,24 +227,6 @@ struct PhotoInfoSheet: View {
                             .foregroundColor(.secondary)
                     }
 
-                    // Coordinates
-                    HStack {
-                        Image(systemName: "location")
-                            .foregroundColor(.secondary)
-                        Text(String(format: "%.6f, %.6f", photo.latitude, photo.longitude))
-                            .font(.system(size: 15))
-                            .foregroundColor(.secondary)
-                    }
-
-                    // Altitude
-                    HStack {
-                        Image(systemName: "mountain.2")
-                            .foregroundColor(.secondary)
-                        Text(String(format: "%.1f m", photo.altitude))
-                            .font(.system(size: 15))
-                            .foregroundColor(.secondary)
-                    }
-
                     // Delete button
                     Button(action: {
                         showDeleteConfirmation = true
@@ -260,6 +244,46 @@ struct PhotoInfoSheet: View {
             .padding(24)
             }
         }
+        .sheet(isPresented: $showShareSheet) {
+            if let image = UIImage(data: photo.imageData) {
+                ShareSheet(items: shareItems, image: image)
+            }
+        }
+    }
+
+    var shareItems: [Any] {
+        var items: [Any] = []
+
+        // Add image
+        if let image = UIImage(data: photo.imageData) {
+            items.append(image)
+        }
+
+        // Build share text
+        var shareText = ""
+
+        // Add place name
+        if let extractedText = photo.extractedText, !extractedText.isEmpty {
+            shareText += "\(extractedText)\n\n"
+        }
+
+        // Add address
+        if let address = photo.address, !address.isEmpty {
+            shareText += "\(address)\n"
+        }
+        shareText += "\(locationText)\n\n"
+
+        // Add Maps link
+        let mapsURL = "http://maps.apple.com/?ll=\(photo.latitude),\(photo.longitude)"
+        if let extractedText = photo.extractedText, !extractedText.isEmpty {
+            shareText += "View in Maps: \(mapsURL)&q=\(extractedText.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? extractedText)"
+        } else {
+            shareText += "View in Maps: \(mapsURL)"
+        }
+
+        items.append(shareText)
+
+        return items
     }
 
     func openInMaps() {
@@ -278,4 +302,17 @@ struct PhotoInfoSheet: View {
             MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving
         ])
     }
+}
+
+// Share Sheet UIViewControllerRepresentable
+struct ShareSheet: UIViewControllerRepresentable {
+    let items: [Any]
+    let image: UIImage
+
+    func makeUIViewController(context: Context) -> UIActivityViewController {
+        let controller = UIActivityViewController(activityItems: items, applicationActivities: nil)
+        return controller
+    }
+
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
 }

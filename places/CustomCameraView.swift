@@ -67,9 +67,9 @@ struct CustomCameraView: View {
                     } label: {
                         Image(systemName: "mappin.and.ellipse")
                             .font(.system(size: 22))
-                            .foregroundColor(.primary)
+                            .foregroundColor(.white)
                             .frame(width: 50, height: 50)
-                            .background(Color(.systemGray6))
+                            .background(Color(red: 40/255, green: 40/255, blue: 40/255))
                             .clipShape(Circle())
                     }
 
@@ -103,7 +103,7 @@ struct CustomCameraView: View {
                             .font(.system(size: 22))
                             .foregroundColor(.white)
                             .frame(width: 50, height: 50)
-                            .background(Color(uiColor: .systemGray6))
+                            .background(Color(red: 40/255, green: 40/255, blue: 40/255))
                             .clipShape(Circle())
                     }
                     .padding(.trailing, 35)
