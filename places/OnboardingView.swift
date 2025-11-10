@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct OnboardingView: View {
-    @Binding var showOnboarding: Bool
+    @Binding var hasSeenOnboarding: Bool
 
     var body: some View {
         ZStack {
@@ -106,7 +106,9 @@ struct OnboardingView: View {
 
                 // Continue Button
                 Button(action: {
-                    showOnboarding = false
+                    withAnimation {
+                        hasSeenOnboarding = true
+                    }
                 }) {
                     Text("Continue")
                         .font(.system(size: 17, weight: .semibold))
@@ -119,8 +121,8 @@ struct OnboardingView: View {
                 .padding(.horizontal, 32)
                 .padding(.bottom, 16)
 
-                
-               
+
+
             }
         }
     }

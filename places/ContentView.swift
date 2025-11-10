@@ -13,24 +13,17 @@ struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @State private var showPlaces = false
     @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding = false
-    @State private var showOnboarding = true
 
     var body: some View {
-        ZStack {
-            CustomCameraView(modelContext: modelContext, showPlacesView: $showPlaces)
-                .ignoresSafeArea()
-                .fullScreenCover(isPresented: $showPlaces) {
-                    PlacesView()
-                }
-
-            if !hasSeenOnboarding && showOnboarding {
-                OnboardingView(showOnboarding: $showOnboarding)
-                    .transition(.opacity)
-                    .onChange(of: showOnboarding) { oldValue, newValue in
-                        if !newValue {
-                            hasSeenOnboarding = true
-                        }
+        Group {
+            if hasSeenOnboarding {
+                CustomCameraView(modelContext: modelContext, showPlacesView: $showPlaces)
+                    .ignoresSafeArea()
+                    .fullScreenCover(isPresented: $showPlaces) {
+                        PlacesView()
                     }
+            } else {
+                OnboardingView(hasSeenOnboarding: $hasSeenOnboarding)
             }
         }
     }
