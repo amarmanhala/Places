@@ -14,6 +14,14 @@ import MapKit
 import Photos
 import Combine
 
+// OCR Candidate for user selection (future feature)
+struct OCRCandidate: Identifiable {
+    let id = UUID()
+    let text: String
+    let score: Float
+    let confidence: Float
+}
+
 struct CustomCameraView: View {
     @Environment(\.dismiss) var dismiss
     let modelContext: ModelContext
@@ -63,6 +71,10 @@ struct CustomCameraView: View {
                 HStack(alignment: .center) {
                     // Places Button (left)
                     Button {
+                        // Very light haptic feedback
+                        let impactFeedback = UIImpactFeedbackGenerator(style: .soft)
+                        impactFeedback.impactOccurred()
+
                         showPlacesView = true
                     } label: {
                         Image(systemName: "mappin.and.ellipse")
@@ -152,6 +164,7 @@ struct PhotoPreviewView: View {
 
     @State private var isProcessing = false
     @State private var showInfoSheet = true
+    @State private var isLoadingData = true
     @State private var extractedText: String?
     @State private var city: String?
     @State private var state: String?
@@ -199,6 +212,7 @@ struct PhotoPreviewView: View {
             PhotoPreviewInfoSheet(
                 image: image,
                 locationManager: locationManager,
+                isLoadingData: isLoadingData,
                 extractedText: extractedText,
                 city: city,
                 state: state,
@@ -243,6 +257,11 @@ struct PhotoPreviewView: View {
                             self.address = foundAddress
                             self.phoneNumber = foundPhone
                             self.category = CategoryHelper.categorize(poiCategory: poiCategory, extractedText: verifiedName ?? text)
+                            self.isLoadingData = false
+
+                            // Trigger haptic feedback
+                            let generator = UINotificationFeedbackGenerator()
+                            generator.notificationOccurred(.success)
                         } else {
                             reverseGeocodeLocation()
                         }
@@ -255,7 +274,10 @@ struct PhotoPreviewView: View {
     }
 
     func reverseGeocodeLocation() {
-        guard let location = locationManager.currentLocation else { return }
+        guard let location = locationManager.currentLocation else {
+            isLoadingData = false
+            return
+        }
 
         let geocoder = CLGeocoder()
         geocoder.reverseGeocodeLocation(location) { placemarks, error in
@@ -274,6 +296,11 @@ struct PhotoPreviewView: View {
                 }
                 self.address = addressComponents.isEmpty ? nil : addressComponents.joined(separator: " ")
                 self.category = CategoryHelper.categorize(poiCategory: nil, extractedText: self.extractedText)
+                self.isLoadingData = false
+
+                // Trigger haptic feedback
+                let generator = UINotificationFeedbackGenerator()
+                generator.notificationOccurred(.success)
             }
         }
     }
@@ -465,19 +492,197 @@ struct PhotoPreviewView: View {
             return
         }
 
+        let startTime = Date()
+
+        DispatchQueue.global(qos: .userInitiated).async {
+            // MARK: - Multi-Pass OCR Strategy
+            // Try multiple approaches and combine results for best accuracy
+
+            var allResults: [(text: String, confidence: Float, size: CGFloat, boundingBox: CGRect, method: String)] = []
+
+            // Pass 1: Standard OCR (baseline - ensures backward compatibility)
+            if let standardResults = self.performStandardOCR(on: cgImage) {
+                allResults.append(contentsOf: standardResults.map { ($0.text, $0.confidence, $0.size, $0.boundingBox, "standard") })
+            }
+
+            // Pass 2A: Enhanced OCR with aggressive preprocessing (for neon/high-contrast)
+            if let enhancedImage = self.preprocessImageForOCR(image, mode: .aggressive) {
+                if let enhancedResults = self.performEnhancedOCR(on: enhancedImage) {
+                    allResults.append(contentsOf: enhancedResults.map { ($0.text, $0.confidence, $0.size, $0.boundingBox, "enhanced-aggressive") })
+                }
+            }
+
+            // Pass 2B: Enhanced OCR with gentle preprocessing (for cursive/script)
+            if let gentleImage = self.preprocessImageForOCR(image, mode: .gentle) {
+                if let gentleResults = self.performEnhancedOCR(on: gentleImage) {
+                    allResults.append(contentsOf: gentleResults.map { ($0.text, $0.confidence, $0.size, $0.boundingBox, "enhanced-gentle") })
+                }
+            }
+
+            // Pass 2C: Color-boosted preprocessing (for red/colored text)
+            if let colorImage = self.preprocessImageForOCR(image, mode: .colorBoost) {
+                if let colorResults = self.performEnhancedOCR(on: colorImage) {
+                    allResults.append(contentsOf: colorResults.map { ($0.text, $0.confidence, $0.size, $0.boundingBox, "enhanced-color") })
+                }
+            }
+
+            // Pass 3: Fast recognition for quick text (fallback)
+            if let fastResults = self.performFastOCR(on: cgImage) {
+                allResults.append(contentsOf: fastResults.map { ($0.text, $0.confidence, $0.size, $0.boundingBox, "fast") })
+            }
+
+            // Analyze image for brightness/neon detection
+            let brightnessMap = self.analyzeBrightness(in: image)
+
+            // Combine and rank results with brightness analysis
+            let (bestResult, topCandidates) = self.selectBestResultWithAlternatives(from: allResults, brightnessMap: brightnessMap, imageSize: image.size)
+
+            // Calculate processing time
+            let processingTime = Int(Date().timeIntervalSince(startTime) * 1000)
+
+            // Capture console log output
+            let consoleLog = self.captureConsoleLog(allResults: allResults, bestResult: bestResult)
+
+            // Log to database for analysis
+            self.logToDatabase(
+                image: image,
+                allResults: allResults,
+                topCandidates: topCandidates,
+                brightnessMap: brightnessMap,
+                processingTime: processingTime,
+                consoleLog: consoleLog
+            )
+
+            // Detailed logging for daily testing
+            self.logOCRResults(allResults, bestResult: bestResult)
+
+            DispatchQueue.main.async {
+                completion(bestResult)
+            }
+        }
+    }
+
+    // MARK: - Database Logging
+    private func logToDatabase(
+        image: UIImage,
+        allResults: [(text: String, confidence: Float, size: CGFloat, boundingBox: CGRect, method: String)],
+        topCandidates: [OCRCandidate],
+        brightnessMap: [[Float]],
+        processingTime: Int,
+        consoleLog: String
+    ) {
+        // Calculate metadata
+        let imageHash = OCRLogger.shared.hashImage(image)
+        let imagePath = OCRLogger.shared.saveImage(image, hash: imageHash)
+        let brightnessAvg = brightnessMap.flatMap { $0 }.reduce(0, +) / Float(brightnessMap.flatMap { $0 }.count)
+        let timeOfDay = OCRLogger.shared.getTimeOfDay()
+
+        // Get selected result details
+        let bestCandidate = topCandidates.first
+        let selectedText = bestCandidate?.text
+        let selectedScore = bestCandidate?.score
+        let selectedConfidence = bestCandidate?.confidence
+
+        // Find which method produced the best result
+        var selectedMethod: String? = nil
+        var selectedPosition: (x: Float, y: Float)? = nil
+        var selectedSize: Float? = nil
+
+        if let selectedText = selectedText {
+            // Find the result that matches selected text
+            if let match = allResults.first(where: { $0.text.lowercased() == selectedText.lowercased() }) {
+                selectedMethod = match.method
+                selectedPosition = (Float(match.boundingBox.midX), Float(match.boundingBox.midY))
+                selectedSize = Float(match.size)
+            }
+        }
+
+        // Create JSON for all candidates
+        let candidatesJSON = topCandidates.map { candidate in
+            [
+                "text": candidate.text,
+                "score": candidate.score,
+                "confidence": candidate.confidence
+            ]
+        }
+        let candidatesJSONString = (try? JSONSerialization.data(withJSONObject: candidatesJSON))
+            .flatMap { String(data: $0, encoding: .utf8) } ?? "[]"
+
+        // Create JSON for methods summary
+        let methodsUsed = Set(allResults.map { $0.method })
+        let methodsSummary = methodsUsed.map { method in
+            let count = allResults.filter { $0.method == method }.count
+            return [
+                "method": method,
+                "detections": count
+            ]
+        }
+        let methodsJSONString = (try? JSONSerialization.data(withJSONObject: methodsSummary))
+            .flatMap { String(data: $0, encoding: .utf8) } ?? "[]"
+
+        // Detect characteristics
+        let hasBrightText = brightnessAvg > 0.6
+        let textPosition = (selectedPosition?.y ?? 0) > 0.5 ? "upper" : "lower"
+
+        // Create OCR attempt record
+        let attempt = OCRLogger.OCRAttempt(
+            imageHash: imageHash,
+            imagePath: imagePath,
+            brightnessAvg: brightnessAvg,
+            timeOfDay: timeOfDay,
+            selectedText: selectedText,
+            selectedScore: selectedScore,
+            selectedConfidence: selectedConfidence,
+            selectedMethod: selectedMethod,
+            selectedPositionX: selectedPosition?.x,
+            selectedPositionY: selectedPosition?.y,
+            selectedSize: selectedSize,
+            allCandidates: candidatesJSONString,
+            allMethodsSummary: methodsJSONString,
+            hasBrightText: hasBrightText,
+            dominantColor: nil, // TODO: Add color detection
+            textPosition: textPosition,
+            processingTimeMs: processingTime,
+            numCandidates: topCandidates.count,
+            numMethodsDetected: methodsUsed.count,
+            consoleLog: consoleLog
+        )
+
+        OCRLogger.shared.logOCRAttempt(attempt)
+    }
+
+    private func captureConsoleLog(allResults: [(text: String, confidence: Float, size: CGFloat, boundingBox: CGRect, method: String)], bestResult: String?) -> String {
+        var log = ""
+
+        // Group by method
+        let byMethod = Dictionary(grouping: allResults) { $0.method }
+
+        for (method, items) in byMethod.sorted(by: { $0.key < $1.key }) {
+            log += "\(method): "
+            let texts = items.sorted(by: { $0.confidence > $1.confidence }).prefix(3).map { $0.text }
+            log += texts.joined(separator: ", ")
+            log += "\n"
+        }
+
+        log += "Selected: \(bestResult ?? "nil")"
+
+        return log
+    }
+
+    // MARK: - Standard OCR (Baseline)
+    private func performStandardOCR(on cgImage: CGImage) -> [(text: String, confidence: Float, size: CGFloat, boundingBox: CGRect)]? {
+        var results: [(text: String, confidence: Float, size: CGFloat, boundingBox: CGRect)] = []
+        let semaphore = DispatchSemaphore(value: 0)
+
         let request = VNRecognizeTextRequest { request, error in
-            guard error == nil else {
-                print("❌ Text recognition error: \(error!.localizedDescription)")
-                completion(nil)
+            defer { semaphore.signal() }
+
+            guard error == nil,
+                  let observations = request.results as? [VNRecognizedTextObservation] else {
                 return
             }
 
-            guard let observations = request.results as? [VNRecognizedTextObservation] else {
-                completion(nil)
-                return
-            }
-
-            let recognizedTexts = observations.compactMap { observation -> (text: String, confidence: Float, size: CGFloat)? in
+            results = observations.compactMap { observation -> (text: String, confidence: Float, size: CGFloat, boundingBox: CGRect)? in
                 guard let candidate = observation.topCandidates(1).first,
                       candidate.confidence > 0.5 else {
                     return nil
@@ -486,31 +691,384 @@ struct PhotoPreviewView: View {
                 let boundingBox = observation.boundingBox
                 let size = boundingBox.width * boundingBox.height
 
-                return (candidate.string, candidate.confidence, size)
+                return (candidate.string, candidate.confidence, size, boundingBox)
             }
-
-            let sortedTexts = recognizedTexts
-                .sorted { $0.size > $1.size }
-                .map { $0.text }
-
-            print("📝 All recognized text: \(sortedTexts)")
-
-            let extractedText = sortedTexts.first
-            completion(extractedText)
         }
 
         request.recognitionLevel = .accurate
         request.usesLanguageCorrection = true
 
         let handler = VNImageRequestHandler(cgImage: cgImage, options: [:])
-        DispatchQueue.global(qos: .userInitiated).async {
-            do {
-                try handler.perform([request])
-            } catch {
-                print("❌ Failed to perform text recognition: \(error.localizedDescription)")
-                completion(nil)
+        do {
+            try handler.perform([request])
+            semaphore.wait()
+            return results.isEmpty ? nil : results
+        } catch {
+            return nil
+        }
+    }
+
+    // MARK: - Enhanced OCR (for nighttime, neon, reflections)
+    private func performEnhancedOCR(on image: UIImage) -> [(text: String, confidence: Float, size: CGFloat, boundingBox: CGRect)]? {
+        guard let cgImage = image.cgImage else { return nil }
+
+        var results: [(text: String, confidence: Float, size: CGFloat, boundingBox: CGRect)] = []
+        let semaphore = DispatchSemaphore(value: 0)
+
+        let request = VNRecognizeTextRequest { request, error in
+            defer { semaphore.signal() }
+
+            guard error == nil,
+                  let observations = request.results as? [VNRecognizedTextObservation] else {
+                return
+            }
+
+            results = observations.compactMap { observation -> (text: String, confidence: Float, size: CGFloat, boundingBox: CGRect)? in
+                // Even lower confidence threshold for enhanced preprocessing (cursive text often scores lower)
+                guard let candidate = observation.topCandidates(1).first,
+                      candidate.confidence > 0.2 else {
+                    return nil
+                }
+
+                let boundingBox = observation.boundingBox
+                let size = boundingBox.width * boundingBox.height
+
+                return (candidate.string, candidate.confidence, size, boundingBox)
             }
         }
+
+        request.recognitionLevel = .accurate
+        request.usesLanguageCorrection = true
+        request.minimumTextHeight = 0.03 // Detect smaller text (useful for storefronts)
+
+        let handler = VNImageRequestHandler(cgImage: cgImage, options: [:])
+        do {
+            try handler.perform([request])
+            semaphore.wait()
+            return results.isEmpty ? nil : results
+        } catch {
+            return nil
+        }
+    }
+
+    // MARK: - Fast OCR (Fallback)
+    private func performFastOCR(on cgImage: CGImage) -> [(text: String, confidence: Float, size: CGFloat, boundingBox: CGRect)]? {
+        var results: [(text: String, confidence: Float, size: CGFloat, boundingBox: CGRect)] = []
+        let semaphore = DispatchSemaphore(value: 0)
+
+        let request = VNRecognizeTextRequest { request, error in
+            defer { semaphore.signal() }
+
+            guard error == nil,
+                  let observations = request.results as? [VNRecognizedTextObservation] else {
+                return
+            }
+
+            results = observations.compactMap { observation -> (text: String, confidence: Float, size: CGFloat, boundingBox: CGRect)? in
+                guard let candidate = observation.topCandidates(1).first,
+                      candidate.confidence > 0.6 else {
+                    return nil
+                }
+
+                let boundingBox = observation.boundingBox
+                let size = boundingBox.width * boundingBox.height
+
+                return (candidate.string, candidate.confidence, size, boundingBox)
+            }
+        }
+
+        request.recognitionLevel = .fast
+        request.usesLanguageCorrection = true
+
+        let handler = VNImageRequestHandler(cgImage: cgImage, options: [:])
+        do {
+            try handler.perform([request])
+            semaphore.wait()
+            return results.isEmpty ? nil : results
+        } catch {
+            return nil
+        }
+    }
+
+    // MARK: - Image Preprocessing
+    enum PreprocessingMode {
+        case aggressive  // For neon/high-contrast (strong filters)
+        case gentle      // For cursive/script fonts (minimal processing)
+        case colorBoost  // For red/colored text (saturation boost)
+    }
+
+    private func preprocessImageForOCR(_ image: UIImage, mode: PreprocessingMode) -> UIImage? {
+        guard let ciImage = CIImage(image: image) else { return nil }
+
+        let context = CIContext(options: nil)
+        var processedImage = ciImage
+
+        switch mode {
+        case .aggressive:
+            // Strong preprocessing for neon/nighttime/low-contrast
+            // 1. High contrast boost
+            if let contrastFilter = CIFilter(name: "CIColorControls") {
+                contrastFilter.setValue(processedImage, forKey: kCIInputImageKey)
+                contrastFilter.setValue(1.5, forKey: kCIInputContrastKey) // Strong contrast
+                contrastFilter.setValue(1.2, forKey: kCIInputBrightnessKey) // Brightness boost
+                contrastFilter.setValue(1.0, forKey: kCIInputSaturationKey)
+                if let output = contrastFilter.outputImage {
+                    processedImage = output
+                }
+            }
+
+            // 2. Strong sharpening
+            if let sharpenFilter = CIFilter(name: "CISharpenLuminance") {
+                sharpenFilter.setValue(processedImage, forKey: kCIInputImageKey)
+                sharpenFilter.setValue(0.7, forKey: kCIInputSharpnessKey)
+                if let output = sharpenFilter.outputImage {
+                    processedImage = output
+                }
+            }
+
+            // 3. Noise reduction
+            if let noiseFilter = CIFilter(name: "CINoiseReduction") {
+                noiseFilter.setValue(processedImage, forKey: kCIInputImageKey)
+                noiseFilter.setValue(0.02, forKey: "inputNoiseLevel")
+                if let output = noiseFilter.outputImage {
+                    processedImage = output
+                }
+            }
+
+        case .gentle:
+            // Minimal preprocessing for cursive/script fonts (preserve letter shapes)
+            // 1. Gentle contrast (preserve letter connections)
+            if let contrastFilter = CIFilter(name: "CIColorControls") {
+                contrastFilter.setValue(processedImage, forKey: kCIInputImageKey)
+                contrastFilter.setValue(1.15, forKey: kCIInputContrastKey) // Gentle contrast
+                contrastFilter.setValue(1.05, forKey: kCIInputBrightnessKey) // Minimal brightness
+                contrastFilter.setValue(0.8, forKey: kCIInputSaturationKey) // Reduce saturation slightly
+                if let output = contrastFilter.outputImage {
+                    processedImage = output
+                }
+            }
+
+            // 2. Light unsharp mask (edge enhancement without artifacts)
+            if let unsharpFilter = CIFilter(name: "CIUnsharpMask") {
+                unsharpFilter.setValue(processedImage, forKey: kCIInputImageKey)
+                unsharpFilter.setValue(0.3, forKey: kCIInputIntensityKey)
+                unsharpFilter.setValue(2.5, forKey: kCIInputRadiusKey)
+                if let output = unsharpFilter.outputImage {
+                    processedImage = output
+                }
+            }
+
+        case .colorBoost:
+            // Boost colored text (red, orange, etc.) against backgrounds
+            // 1. Increase saturation to make colored text pop
+            if let contrastFilter = CIFilter(name: "CIColorControls") {
+                contrastFilter.setValue(processedImage, forKey: kCIInputImageKey)
+                contrastFilter.setValue(1.3, forKey: kCIInputContrastKey)
+                contrastFilter.setValue(1.1, forKey: kCIInputBrightnessKey)
+                contrastFilter.setValue(1.4, forKey: kCIInputSaturationKey) // Boost saturation
+                if let output = contrastFilter.outputImage {
+                    processedImage = output
+                }
+            }
+
+            // 2. Vibrance boost (enhances less saturated colors more)
+            if let vibranceFilter = CIFilter(name: "CIVibrance") {
+                vibranceFilter.setValue(processedImage, forKey: kCIInputImageKey)
+                vibranceFilter.setValue(0.5, forKey: "inputAmount")
+                if let output = vibranceFilter.outputImage {
+                    processedImage = output
+                }
+            }
+
+            // 3. Moderate sharpening
+            if let sharpenFilter = CIFilter(name: "CISharpenLuminance") {
+                sharpenFilter.setValue(processedImage, forKey: kCIInputImageKey)
+                sharpenFilter.setValue(0.4, forKey: kCIInputSharpnessKey)
+                if let output = sharpenFilter.outputImage {
+                    processedImage = output
+                }
+            }
+        }
+
+        // Convert back to UIImage
+        guard let cgImage = context.createCGImage(processedImage, from: processedImage.extent) else {
+            return nil
+        }
+
+        return UIImage(cgImage: cgImage)
+    }
+
+    // MARK: - Brightness Analysis for Neon/Illuminated Text Detection
+    private func analyzeBrightness(in image: UIImage) -> [[Float]] {
+        guard let cgImage = image.cgImage else { return [] }
+
+        let width = cgImage.width
+        let height = cgImage.height
+        let bytesPerPixel = 4
+        let bytesPerRow = bytesPerPixel * width
+        let bitsPerComponent = 8
+
+        var pixelData = [UInt8](repeating: 0, count: width * height * bytesPerPixel)
+
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let context = CGContext(data: &pixelData,
+                               width: width,
+                               height: height,
+                               bitsPerComponent: bitsPerComponent,
+                               bytesPerRow: bytesPerRow,
+                               space: colorSpace,
+                               bitmapInfo: CGImageAlphaInfo.noneSkipLast.rawValue)
+
+        context?.draw(cgImage, in: CGRect(x: 0, y: 0, width: width, height: height))
+
+        // Create brightness map (downsampled for performance)
+        let sampleSize = 20
+        var brightnessMap: [[Float]] = []
+
+        for y in stride(from: 0, to: height, by: sampleSize) {
+            var row: [Float] = []
+            for x in stride(from: 0, to: width, by: sampleSize) {
+                let offset = (y * width + x) * bytesPerPixel
+                if offset + 2 < pixelData.count {
+                    let r = Float(pixelData[offset])
+                    let g = Float(pixelData[offset + 1])
+                    let b = Float(pixelData[offset + 2])
+                    // Calculate perceived brightness
+                    let brightness = (0.299 * r + 0.587 * g + 0.114 * b) / 255.0
+                    row.append(brightness)
+                }
+            }
+            if !row.isEmpty {
+                brightnessMap.append(row)
+            }
+        }
+
+        return brightnessMap
+    }
+
+    private func getBrightnessScore(for boundingBox: CGRect, brightnessMap: [[Float]], imageSize: CGSize) -> Float {
+        guard !brightnessMap.isEmpty, !brightnessMap[0].isEmpty else { return 0.5 }
+
+        // Convert normalized coordinates to brightness map coordinates
+        let mapHeight = brightnessMap.count
+        let mapWidth = brightnessMap[0].count
+
+        // Vision coordinates are flipped (origin bottom-left)
+        let centerX = Int(CGFloat(boundingBox.midX) * CGFloat(mapWidth))
+        let centerY = Int((CGFloat(1.0) - CGFloat(boundingBox.midY)) * CGFloat(mapHeight))
+
+        // Sample 3x3 grid around center
+        var brightnessValues: [Float] = []
+        for dy in -1...1 {
+            for dx in -1...1 {
+                let y = max(0, min(mapHeight - 1, centerY + dy))
+                let x = max(0, min(mapWidth - 1, centerX + dx))
+                brightnessValues.append(brightnessMap[y][x])
+            }
+        }
+
+        // Return average brightness
+        return brightnessValues.reduce(0, +) / Float(brightnessValues.count)
+    }
+
+    // MARK: - Result Selection with Alternatives
+    private func selectBestResultWithAlternatives(from results: [(text: String, confidence: Float, size: CGFloat, boundingBox: CGRect, method: String)], brightnessMap: [[Float]], imageSize: CGSize) -> (bestResult: String?, candidates: [OCRCandidate]) {
+        guard !results.isEmpty else { return (nil, []) }
+
+        // Group by text content (case-insensitive)
+        let grouped = Dictionary(grouping: results) { $0.text.lowercased() }
+
+        // Score each unique text by multiple factors
+        let scored = grouped.map { (text, occurrences) -> (text: String, score: Float, confidence: Float, debug: String) in
+            let confidenceSum = occurrences.map { $0.confidence }.reduce(0, +)
+            let avgConfidence = confidenceSum / Float(occurrences.count)
+
+            let sizeSum = occurrences.map { Float($0.size) }.reduce(0, +)
+            let avgSize = sizeSum / Float(occurrences.count)
+
+            let methodCount = Float(occurrences.count)
+
+            // Get brightness score for the bounding box
+            let avgBoundingBox = occurrences.first!.boundingBox
+            let brightnessScore = self.getBrightnessScore(for: avgBoundingBox, brightnessMap: brightnessMap, imageSize: imageSize)
+
+            // Position score: prefer text in upper-center area (typical storefront location)
+            // Vision coordinates: (0,0) is bottom-left, (1,1) is top-right
+            let centerY = Float(avgBoundingBox.midY)
+            let centerX = Float(avgBoundingBox.midX)
+
+            // Ideal storefront position: upper 50% of image, horizontally centered
+            let verticalScore: Float = centerY > 0.5 ? 1.0 : (centerY / 0.5)
+            let horizontalDiff = abs(centerX - 0.5) * 2.0
+            let horizontalScore: Float = 1.0 - horizontalDiff
+            let positionScore = (verticalScore + horizontalScore) / 2.0
+
+            // Enhanced brightness scoring for storefronts
+            let brightnessBonus: Float = brightnessScore > 0.65 ? 0.5 : (brightnessScore > 0.5 ? 0.25 : 0.0)
+
+            // Size bonus - storefronts are usually large text
+            let sizeBonus: Float = avgSize > 0.02 ? 0.3 : (avgSize > 0.01 ? 0.15 : 0.0)
+
+            // Weighted scoring
+            let methodScore = methodCount * 0.20
+            let confScore = avgConfidence * 0.15
+            let sizeScore = avgSize * 0.20
+            let posScore = positionScore * 0.20
+            let brightScore = brightnessScore * 0.25
+
+            let score = methodScore + confScore + sizeScore + posScore + brightScore + brightnessBonus + sizeBonus
+
+            let debug = String(format: "conf:%.2f size:%.4f pos:%.2f bright:%.2f",
+                             avgConfidence, avgSize, positionScore, brightnessScore)
+
+            return (occurrences.first!.text, score, avgConfidence, debug)
+        }
+
+        // Sort by score
+        let sortedScored = scored.sorted(by: { $0.score > $1.score })
+
+        // Get top candidate
+        let best = sortedScored.first?.text
+
+        // Create candidate list (top 5 unique options)
+        let candidates = sortedScored.prefix(5).map { item in
+            OCRCandidate(text: item.text, score: item.score, confidence: item.confidence)
+        }
+
+        // Log top 3 candidates with scores for debugging
+        print("\n🏆 TOP CANDIDATES:")
+        for (index, item) in sortedScored.prefix(3).enumerated() {
+            print("   \(index + 1). \"\(item.text)\" - score: \(String(format: "%.3f", item.score)) (\(item.debug))")
+        }
+
+        return (best, candidates)
+    }
+
+    // MARK: - Result Selection Algorithm (Enhanced with Brightness + Position) - DEPRECATED
+    private func selectBestResult(from results: [(text: String, confidence: Float, size: CGFloat, boundingBox: CGRect, method: String)], brightnessMap: [[Float]], imageSize: CGSize) -> String? {
+        let (best, _) = selectBestResultWithAlternatives(from: results, brightnessMap: brightnessMap, imageSize: imageSize)
+        return best
+    }
+
+    // MARK: - Logging for Daily Testing
+    private func logOCRResults(_ results: [(text: String, confidence: Float, size: CGFloat, boundingBox: CGRect, method: String)], bestResult: String?) {
+        print("\n" + String(repeating: "=", count: 60))
+        print("📊 OCR RESULTS SUMMARY")
+        print(String(repeating: "=", count: 60))
+
+        // Group by method
+        let byMethod = Dictionary(grouping: results) { $0.method }
+
+        for (method, items) in byMethod.sorted(by: { $0.key < $1.key }) {
+            print("\n🔍 \(method.uppercased()) OCR:")
+            for item in items.sorted(by: { $0.confidence > $1.confidence }).prefix(5) {
+                let pos = String(format: "pos:(%.2f,%.2f)", item.boundingBox.midX, item.boundingBox.midY)
+                print("   • \"\(item.text)\" (conf: \(String(format: "%.2f", item.confidence)), size: \(String(format: "%.4f", item.size)), \(pos))")
+            }
+        }
+
+        print("\n✅ SELECTED RESULT: \(bestResult ?? "nil")")
+        print(String(repeating: "=", count: 60) + "\n")
     }
 
     func savePhotoToLibrary(image: UIImage, location: CLLocation?) {
@@ -540,6 +1098,7 @@ struct PhotoPreviewView: View {
 struct PhotoPreviewInfoSheet: View {
     let image: UIImage
     let locationManager: LocationManager
+    let isLoadingData: Bool
     let extractedText: String?
     let city: String?
     let state: String?
@@ -552,6 +1111,27 @@ struct PhotoPreviewInfoSheet: View {
     let onDone: () -> Void
 
     var body: some View {
+        VStack(spacing: 0) {
+            if isLoadingData {
+                // Loading state
+                VStack(spacing: 20) {
+                    ProgressView()
+                        .scaleEffect(1.2)
+                        .padding(.top, 40)
+
+                    Text("Getting place information...")
+                        .font(.system(size: 15))
+                        .foregroundColor(.secondary)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else {
+                // Content loaded
+                contentView
+            }
+        }
+    }
+
+    var contentView: some View {
         VStack(spacing: 0) {
             // Top bar with retake, title, and done buttons
             HStack(spacing: 16) {
@@ -661,26 +1241,6 @@ struct PhotoPreviewInfoSheet: View {
                             Text(Date().formatted(date: .long, time: .shortened))
                                 .font(.system(size: 15))
                                 .foregroundColor(.secondary)
-                        }
-
-                        // Coordinates
-                        if let location = locationManager.currentLocation {
-                            HStack {
-                                Image(systemName: "location")
-                                    .foregroundColor(.secondary)
-                                Text(String(format: "%.6f, %.6f", location.coordinate.latitude, location.coordinate.longitude))
-                                    .font(.system(size: 15))
-                                    .foregroundColor(.secondary)
-                            }
-
-                            // Altitude
-                            HStack {
-                                Image(systemName: "mountain.2")
-                                    .foregroundColor(.secondary)
-                                Text(String(format: "%.1f m", location.altitude))
-                                    .font(.system(size: 15))
-                                    .foregroundColor(.secondary)
-                            }
                         }
                     }
                 }

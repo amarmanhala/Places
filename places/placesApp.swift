@@ -15,7 +15,13 @@ struct placesApp: App {
             Item.self,
             CapturedPhoto.self,
         ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+
+        // CloudKit sync disabled - requires paid Apple Developer account ($99/year)
+        // TODO: Enable when ready: cloudKitDatabase: .automatic
+        let modelConfiguration = ModelConfiguration(
+            schema: schema,
+            isStoredInMemoryOnly: false
+        )
 
         do {
             return try ModelContainer(for: schema, configurations: [modelConfiguration])

@@ -9,6 +9,9 @@ import SwiftUI
 import SwiftData
 import MapKit
 
+// Import DEBUG_OCR flag
+// (Defined in OCRLogger.swift)
+
 struct PhotoDetailView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) private var modelContext
@@ -76,14 +79,14 @@ struct PhotoDetailView: View {
             .presentationDragIndicator(.visible)
             .presentationBackgroundInteraction(.enabled)
             .interactiveDismissDisabled()
-        }
-        .alert("Delete this place?", isPresented: $showDeleteConfirmation) {
-            Button("Cancel", role: .cancel) { }
-            Button("Delete", role: .destructive) {
-                deletePhoto()
+            .alert("Delete this place?", isPresented: $showDeleteConfirmation) {
+                Button("Cancel", role: .cancel) { }
+                Button("Delete", role: .destructive) {
+                    deletePhoto()
+                }
+            } message: {
+                Text("This photo will be permanently deleted.")
             }
-        } message: {
-            Text("This photo will be permanently deleted.")
         }
     }
 
@@ -100,6 +103,7 @@ struct PhotoDetailView: View {
 }
 
 struct PhotoInfoSheet: View {
+    @Environment(\.modelContext) private var modelContext
     let photo: CapturedPhoto
     let locationText: String
     @Binding var showDeleteConfirmation: Bool
@@ -107,6 +111,8 @@ struct PhotoInfoSheet: View {
     let onDismiss: () -> Void
 
     @State private var showShareSheet = false
+    @State private var showEditSheet = false
+    @State private var editedText = ""
 
     var body: some View {
         VStack(spacing: 0) {
@@ -123,12 +129,50 @@ struct PhotoInfoSheet: View {
                         .clipShape(Circle())
                 }
 
-                VStack(spacing: 2) {
+                VStack(spacing: 4) {
                     if let extractedText = photo.extractedText, !extractedText.isEmpty {
                         Text(extractedText)
                             .font(.system(size: 20, weight: .bold))
                             .foregroundColor(.primary)
                             .lineLimit(1)
+                    }
+
+                    // DEBUG: OCR Testing buttons
+                    if DEBUG_OCR {
+                        HStack(spacing: 8) {
+                            Button(action: {
+                                markAsCorrect()
+                            }) {
+                                HStack(spacing: 4) {
+                                    Image(systemName: "checkmark.circle.fill")
+                                        .font(.system(size: 12))
+                                    Text("Correct")
+                                        .font(.system(size: 12, weight: .medium))
+                                }
+                                .foregroundColor(.green)
+                                .padding(.horizontal, 10)
+                                .padding(.vertical, 5)
+                                .background(Color.green.opacity(0.1))
+                                .cornerRadius(6)
+                            }
+
+                            Button(action: {
+                                editedText = photo.extractedText ?? ""
+                                showEditSheet = true
+                            }) {
+                                HStack(spacing: 4) {
+                                    Image(systemName: "pencil.circle.fill")
+                                        .font(.system(size: 12))
+                                    Text("Edit")
+                                        .font(.system(size: 12, weight: .medium))
+                                }
+                                .foregroundColor(.blue)
+                                .padding(.horizontal, 10)
+                                .padding(.vertical, 5)
+                                .background(Color.blue.opacity(0.1))
+                                .cornerRadius(6)
+                            }
+                        }
                     }
                 }
                 .frame(maxWidth: .infinity)
@@ -249,6 +293,69 @@ struct PhotoInfoSheet: View {
                 ShareSheet(items: shareItems, image: image)
             }
         }
+        .sheet(isPresented: $showEditSheet) {
+            NavigationStack {
+                VStack(spacing: 20) {
+                    Text("Edit Place Name")
+                        .font(.title2.bold())
+                        .padding(.top)
+
+                    TextField("Place name", text: $editedText)
+                        .textFieldStyle(.roundedBorder)
+                        .padding(.horizontal)
+
+                    Button(action: {
+                        saveEdit()
+                    }) {
+                        Text("Save")
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(12)
+                    }
+                    .padding(.horizontal)
+                    .disabled(editedText.isEmpty)
+
+                    Spacer()
+                }
+                .padding()
+                .navigationBarItems(
+                    trailing: Button("Cancel") {
+                        showEditSheet = false
+                    }
+                )
+            }
+            .presentationDetents([.height(300)])
+        }
+    }
+
+    func markAsCorrect() {
+        if let originalText = photo.extractedText {
+            // Log that OCR was correct
+            OCRLogger.shared.logCorrection(originalText: originalText, correctedText: originalText)
+            print("✅ Marked '\(originalText)' as correct")
+        }
+    }
+
+    func saveEdit() {
+        let originalText = photo.extractedText ?? ""
+
+        // Update the photo's extracted text
+        photo.extractedText = editedText
+
+        // Save to database
+        do {
+            try modelContext.save()
+            print("✅ Place name updated to: \(editedText)")
+        } catch {
+            print("❌ Error saving edit: \(error)")
+        }
+
+        // Log the correction for OCR analysis
+        OCRLogger.shared.logCorrection(originalText: originalText, correctedText: editedText)
+
+        showEditSheet = false
     }
 
     var shareItems: [Any] {
