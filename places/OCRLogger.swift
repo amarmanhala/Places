@@ -95,6 +95,10 @@ class OCRLogger {
             num_candidates INTEGER,
             num_methods_detected INTEGER,
 
+            -- Vision classification tracking
+            used_vision_classification INTEGER DEFAULT 0,
+            vision_classification_match INTEGER DEFAULT 0,
+
             -- Raw data for debugging
             console_log TEXT
         );
@@ -138,6 +142,8 @@ class OCRLogger {
         let processingTimeMs: Int
         let numCandidates: Int
         let numMethodsDetected: Int
+        let usedVisionClassification: Bool
+        let visionClassificationMatch: Bool
         let consoleLog: String
     }
 
@@ -191,8 +197,9 @@ class OCRLogger {
             all_candidates, all_methods_summary,
             has_bright_text, dominant_color, text_position,
             processing_time_ms, num_candidates, num_methods_detected,
+            used_vision_classification, vision_classification_match,
             console_log
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
         """
 
         var insertStatement: OpaquePointer?
@@ -266,7 +273,9 @@ class OCRLogger {
             sqlite3_bind_int(insertStatement, 17, Int32(attempt.processingTimeMs))
             sqlite3_bind_int(insertStatement, 18, Int32(attempt.numCandidates))
             sqlite3_bind_int(insertStatement, 19, Int32(attempt.numMethodsDetected))
-            sqlite3_bind_text(insertStatement, 20, (attempt.consoleLog as NSString).utf8String, -1, nil)
+            sqlite3_bind_int(insertStatement, 20, attempt.usedVisionClassification ? 1 : 0)
+            sqlite3_bind_int(insertStatement, 21, attempt.visionClassificationMatch ? 1 : 0)
+            sqlite3_bind_text(insertStatement, 22, (attempt.consoleLog as NSString).utf8String, -1, nil)
 
             if sqlite3_step(insertStatement) == SQLITE_DONE {
                 print("✅ OCR attempt logged to database")

@@ -624,6 +624,10 @@ struct PhotoPreviewView: View {
         let hasBrightText = brightnessAvg > 0.6
         let textPosition = (selectedPosition?.y ?? 0) > 0.5 ? "upper" : "lower"
 
+        // Track Vision classification usage
+        let usedVision = allResults.contains { $0.method == "vision-classification" }
+        let visionMatch = selectedMethod == "vision-classification"
+
         // Create OCR attempt record
         let attempt = OCRLogger.OCRAttempt(
             imageHash: imageHash,
@@ -645,6 +649,8 @@ struct PhotoPreviewView: View {
             processingTimeMs: processingTime,
             numCandidates: topCandidates.count,
             numMethodsDetected: methodsUsed.count,
+            usedVisionClassification: usedVision,
+            visionClassificationMatch: visionMatch,
             consoleLog: consoleLog
         )
 

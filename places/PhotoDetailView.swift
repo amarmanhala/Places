@@ -130,48 +130,45 @@ struct PhotoInfoSheet: View {
                 }
 
                 VStack(spacing: 4) {
-                    if let extractedText = photo.extractedText, !extractedText.isEmpty {
-                        Text(extractedText)
-                            .font(.system(size: 20, weight: .bold))
-                            .foregroundColor(.primary)
-                            .lineLimit(1)
+                    HStack(spacing: 8) {
+                        if let extractedText = photo.extractedText, !extractedText.isEmpty {
+                            Text(extractedText)
+                                .font(.system(size: 20, weight: .bold))
+                                .foregroundColor(.primary)
+                                .lineLimit(1)
+                        } else {
+                            Text("Unknown Place")
+                                .font(.system(size: 20, weight: .bold))
+                                .foregroundColor(.secondary)
+                        }
+
+                        // Edit button - always visible for users to correct OCR
+                        Button(action: {
+                            editedText = photo.extractedText ?? ""
+                            showEditSheet = true
+                        }) {
+                            Image(systemName: "pencil.circle.fill")
+                                .font(.system(size: 18))
+                                .foregroundColor(.blue)
+                        }
                     }
 
-                    // DEBUG: OCR Testing buttons
+                    // DEBUG: OCR Testing - "Correct" button for accuracy tracking
                     if DEBUG_OCR {
-                        HStack(spacing: 8) {
-                            Button(action: {
-                                markAsCorrect()
-                            }) {
-                                HStack(spacing: 4) {
-                                    Image(systemName: "checkmark.circle.fill")
-                                        .font(.system(size: 12))
-                                    Text("Correct")
-                                        .font(.system(size: 12, weight: .medium))
-                                }
-                                .foregroundColor(.green)
-                                .padding(.horizontal, 10)
-                                .padding(.vertical, 5)
-                                .background(Color.green.opacity(0.1))
-                                .cornerRadius(6)
+                        Button(action: {
+                            markAsCorrect()
+                        }) {
+                            HStack(spacing: 4) {
+                                Image(systemName: "checkmark.circle.fill")
+                                    .font(.system(size: 12))
+                                Text("Mark as Correct")
+                                    .font(.system(size: 12, weight: .medium))
                             }
-
-                            Button(action: {
-                                editedText = photo.extractedText ?? ""
-                                showEditSheet = true
-                            }) {
-                                HStack(spacing: 4) {
-                                    Image(systemName: "pencil.circle.fill")
-                                        .font(.system(size: 12))
-                                    Text("Edit")
-                                        .font(.system(size: 12, weight: .medium))
-                                }
-                                .foregroundColor(.blue)
-                                .padding(.horizontal, 10)
-                                .padding(.vertical, 5)
-                                .background(Color.blue.opacity(0.1))
-                                .cornerRadius(6)
-                            }
+                            .foregroundColor(.green)
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 5)
+                            .background(Color.green.opacity(0.1))
+                            .cornerRadius(6)
                         }
                     }
                 }
