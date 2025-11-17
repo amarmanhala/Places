@@ -492,6 +492,9 @@ struct PhotoPreviewView: View {
             return
         }
 
+        // Capture orientation before processing to fix landscape photo OCR
+        let orientation = image.cgImagePropertyOrientation
+
         let startTime = Date()
 
         DispatchQueue.global(qos: .userInitiated).async {
@@ -501,33 +504,33 @@ struct PhotoPreviewView: View {
             var allResults: [(text: String, confidence: Float, size: CGFloat, boundingBox: CGRect, method: String)] = []
 
             // Pass 1: Standard OCR (baseline - ensures backward compatibility)
-            if let standardResults = self.performStandardOCR(on: cgImage) {
+            if let standardResults = self.performStandardOCR(on: cgImage, orientation: orientation) {
                 allResults.append(contentsOf: standardResults.map { ($0.text, $0.confidence, $0.size, $0.boundingBox, "standard") })
             }
 
             // Pass 2A: Enhanced OCR with aggressive preprocessing (for neon/high-contrast)
             if let enhancedImage = self.preprocessImageForOCR(image, mode: .aggressive) {
-                if let enhancedResults = self.performEnhancedOCR(on: enhancedImage) {
+                if let enhancedResults = self.performEnhancedOCR(on: enhancedImage, orientation: orientation) {
                     allResults.append(contentsOf: enhancedResults.map { ($0.text, $0.confidence, $0.size, $0.boundingBox, "enhanced-aggressive") })
                 }
             }
 
             // Pass 2B: Enhanced OCR with gentle preprocessing (for cursive/script)
             if let gentleImage = self.preprocessImageForOCR(image, mode: .gentle) {
-                if let gentleResults = self.performEnhancedOCR(on: gentleImage) {
+                if let gentleResults = self.performEnhancedOCR(on: gentleImage, orientation: orientation) {
                     allResults.append(contentsOf: gentleResults.map { ($0.text, $0.confidence, $0.size, $0.boundingBox, "enhanced-gentle") })
                 }
             }
 
             // Pass 2C: Color-boosted preprocessing (for red/colored text)
             if let colorImage = self.preprocessImageForOCR(image, mode: .colorBoost) {
-                if let colorResults = self.performEnhancedOCR(on: colorImage) {
+                if let colorResults = self.performEnhancedOCR(on: colorImage, orientation: orientation) {
                     allResults.append(contentsOf: colorResults.map { ($0.text, $0.confidence, $0.size, $0.boundingBox, "enhanced-color") })
                 }
             }
 
             // Pass 3: Fast recognition for quick text (fallback)
-            if let fastResults = self.performFastOCR(on: cgImage) {
+            if let fastResults = self.performFastOCR(on: cgImage, orientation: orientation) {
                 allResults.append(contentsOf: fastResults.map { ($0.text, $0.confidence, $0.size, $0.boundingBox, "fast") })
             }
 
@@ -676,7 +679,7 @@ struct PhotoPreviewView: View {
     }
 
     // MARK: - Standard OCR (Baseline)
-    private func performStandardOCR(on cgImage: CGImage) -> [(text: String, confidence: Float, size: CGFloat, boundingBox: CGRect)]? {
+    private func performStandardOCR(on cgImage: CGImage, orientation: CGImagePropertyOrientation) -> [(text: String, confidence: Float, size: CGFloat, boundingBox: CGRect)]? {
         var results: [(text: String, confidence: Float, size: CGFloat, boundingBox: CGRect)] = []
         let semaphore = DispatchSemaphore(value: 0)
 
@@ -704,7 +707,7 @@ struct PhotoPreviewView: View {
         request.recognitionLevel = .accurate
         request.usesLanguageCorrection = true
 
-        let handler = VNImageRequestHandler(cgImage: cgImage, options: [:])
+        let handler = VNImageRequestHandler(cgImage: cgImage, orientation: orientation, options: [:])
         do {
             try handler.perform([request])
             semaphore.wait()
@@ -715,7 +718,7 @@ struct PhotoPreviewView: View {
     }
 
     // MARK: - Enhanced OCR (for nighttime, neon, reflections)
-    private func performEnhancedOCR(on image: UIImage) -> [(text: String, confidence: Float, size: CGFloat, boundingBox: CGRect)]? {
+    private func performEnhancedOCR(on image: UIImage, orientation: CGImagePropertyOrientation) -> [(text: String, confidence: Float, size: CGFloat, boundingBox: CGRect)]? {
         guard let cgImage = image.cgImage else { return nil }
 
         var results: [(text: String, confidence: Float, size: CGFloat, boundingBox: CGRect)] = []
@@ -747,7 +750,7 @@ struct PhotoPreviewView: View {
         request.usesLanguageCorrection = true
         request.minimumTextHeight = 0.03 // Detect smaller text (useful for storefronts)
 
-        let handler = VNImageRequestHandler(cgImage: cgImage, options: [:])
+        let handler = VNImageRequestHandler(cgImage: cgImage, orientation: orientation, options: [:])
         do {
             try handler.perform([request])
             semaphore.wait()
@@ -758,7 +761,7 @@ struct PhotoPreviewView: View {
     }
 
     // MARK: - Fast OCR (Fallback)
-    private func performFastOCR(on cgImage: CGImage) -> [(text: String, confidence: Float, size: CGFloat, boundingBox: CGRect)]? {
+    private func performFastOCR(on cgImage: CGImage, orientation: CGImagePropertyOrientation) -> [(text: String, confidence: Float, size: CGFloat, boundingBox: CGRect)]? {
         var results: [(text: String, confidence: Float, size: CGFloat, boundingBox: CGRect)] = []
         let semaphore = DispatchSemaphore(value: 0)
 
@@ -786,7 +789,7 @@ struct PhotoPreviewView: View {
         request.recognitionLevel = .fast
         request.usesLanguageCorrection = true
 
-        let handler = VNImageRequestHandler(cgImage: cgImage, options: [:])
+        let handler = VNImageRequestHandler(cgImage: cgImage, orientation: orientation, options: [:])
         do {
             try handler.perform([request])
             semaphore.wait()
@@ -896,12 +899,12 @@ struct PhotoPreviewView: View {
             }
         }
 
-        // Convert back to UIImage
+        // Convert back to UIImage, preserving original orientation
         guard let cgImage = context.createCGImage(processedImage, from: processedImage.extent) else {
             return nil
         }
 
-        return UIImage(cgImage: cgImage)
+        return UIImage(cgImage: cgImage, scale: image.scale, orientation: image.imageOrientation)
     }
 
     // MARK: - Brightness Analysis for Neon/Illuminated Text Detection
@@ -1476,5 +1479,59 @@ struct CameraPreview: UIViewRepresentable {
             let newScale = lastScale * gesture.scale
             camera.zoom(factor: newScale)
         }
+    }
+}
+
+// MARK: - UIImage Orientation Extension
+extension UIImage {
+    var cgImagePropertyOrientation: CGImagePropertyOrientation {
+        switch imageOrientation {
+        case .up: return .up
+        case .down: return .down
+        case .left: return .left
+        case .right: return .right
+        case .upMirrored: return .upMirrored
+        case .downMirrored: return .downMirrored
+        case .leftMirrored: return .leftMirrored
+        case .rightMirrored: return .rightMirrored
+        @unknown default: return .up
+        }
+    }
+
+    // MARK: - 4:3 Aspect Ratio Cropping
+    func cropTo4x3() -> UIImage? {
+        guard let cgImage = self.cgImage else { return nil }
+
+        let width = CGFloat(cgImage.width)
+        let height = CGFloat(cgImage.height)
+
+        let targetAspectRatio: CGFloat = 4.0 / 3.0
+        let currentAspectRatio = width / height
+
+        var cropWidth: CGFloat
+        var cropHeight: CGFloat
+
+        if currentAspectRatio > targetAspectRatio {
+            // Image is wider than 4:3, crop width
+            cropHeight = height
+            cropWidth = height * targetAspectRatio
+        } else {
+            // Image is taller than 4:3, crop height
+            cropWidth = width
+            cropHeight = width / targetAspectRatio
+        }
+
+        // Calculate the origin to center the crop
+        let x = (width - cropWidth) / 2
+        let y = (height - cropHeight) / 2
+
+        // Create the crop rectangle
+        let cropRect = CGRect(x: x, y: y, width: cropWidth, height: cropHeight)
+
+        // Perform the crop
+        guard let croppedCGImage = cgImage.cropping(to: cropRect) else { return nil }
+
+        // Return UIImage with preserved orientation and scale
+        return UIImage(cgImage: croppedCGImage, scale: self.scale, orientation: self.imageOrientation)
     }
 }
